@@ -1,169 +1,35 @@
-<!-- <mat-toolbar color="primary">
-    <span>SCC Training Management Dashboard</span>
-  </mat-toolbar>
-  
-  <div class="dashboard-container">
-    <div class="stats-cards">
-      <mat-card class="stat-card">
-        <mat-card-header>
-          <mat-icon class="stat-icon">people</mat-icon>
-          <span>Total Trainees</span>
-        </mat-card-header>
-        <mat-card-content>
-          <h2>{{ traineesCount }}</h2>
-        </mat-card-content>
-      </mat-card>
-  
-      <mat-card class="stat-card">
-        <mat-card-header>
-          <mat-icon class="stat-icon">person</mat-icon>
-          <span>Total Trainers</span>
-        </mat-card-header>
-        <mat-card-content>
-          <h2>{{ trainersCount }}</h2>
-        </mat-card-content>
-      </mat-card>
-  
-      <mat-card class="stat-card">
-        <mat-card-header>
-          <mat-icon class="stat-icon">event</mat-icon>
-          <span>Trainings</span>
-        </mat-card-header>
-        <mat-card-content>
-          <div class="training-stats">
-            <p>Ongoing: {{ ongoingTrainings }}</p>
-            <p>Completed: {{ completedTrainings }}</p>
-            <p>Scheduled: {{ scheduledTrainings }}</p>
-          </div>
-        </mat-card-content>
-      </mat-card>
-    </div>
-  </div> -->
- 
-  
+<mat-toolbar color="primary">
+  <span>SCC Training Management Dashboard</span>
+</mat-toolbar>
 
-  
-
-
-  <!-- <mat-toolbar color="primary">
-    <span>SCC Training Management Dashboard</span>
-  </mat-toolbar>
+<div class="dashboard-container">
+  <!-- Summary Cards -->
   <div class="summary-cards">
     <mat-card *ngFor="let card of summaryCards" class="summary-card">
       <mat-card-header>
-        <mat-icon>{{ card.icon }}</mat-icon>
-        <span>{{ card.title }}</span>
+        <mat-icon class="summary-icon">{{ card.icon }}</mat-icon>
+        <h3> {{ card.title }}</h3>
       </mat-card-header>
       <mat-card-content>
-        <p *ngFor="let metric of card.metrics">
-          {{ metric.label }}: <strong>{{ metric.value }}</strong>
+        <p *ngFor="let metric of card.metrics" class="metric">
+          {{ metric.label }}: <span class="metric-value">{{ metric.value }}</span>
         </p>
       </mat-card-content>
     </mat-card>
   </div>
-  
 
-  <div class="charts-section">
-    <div>
+  <!-- Charts Section -->
+  <div class="charts-container">
+    <!-- Pie Chart -->
+    <div class="chart pie-chart-container">
       <h3>Training Program Status</h3>
-      <canvas id="MyPieChart">{{PieChart}}</canvas>
+      <canvas id="MyPieChart"></canvas>
     </div>
-    
-    <div>
-      <h3>Assessment Performance</h3>
-      <canvas id="MyBarChart">{{BarChart}}</canvas>
-    </div>
-  </div> -->
 
-
-    <!-- <div>
-      <h3>Trainee Enrollment</h3>
-      <canvas id="MyLineChart">{{LineChart}}</canvas>
-    </div>
-  
-
-  
-  <div class="notifications">
-    <mat-card>
-      <mat-card-header>
-        <mat-icon>notifications</mat-icon>
-        <span>Notifications</span>
-      </mat-card-header>
-      <mat-card-content>
-        <ul>
-          <li *ngFor="let notification of notifications">{{ notification }}</li>
-        </ul>
-      </mat-card-content>
-    </mat-card>
-  </div>
-
-  
-
-
-  <div class="leaderboard">
-    <h3>Top Trainees</h3>
-    <ul>
-      <li *ngFor="let trainee of topTrainees">
-        {{ trainee.name }} - {{ trainee.score }}%
-      </li>
-    </ul>
-  
-    <h3>Top Trainers</h3>
-    <ul>
-      <li *ngFor="let trainer of topTrainers">
-        {{ trainer.name }} - {{ trainer.programs }} programs
-      </li>
-    </ul>
-  </div>
-
-  
-
-  <div class="quick-actions">
-    <button mat-raised-button color="primary">Add New Trainee</button>
-    <button mat-raised-button color="accent">Schedule Training</button>
-    <button mat-raised-button color="warn">View Reports</button>
-  </div>
-   -->
-
-
-
-
-
-
-
-   <mat-toolbar color="primary">
-    <span>SCC Training Management Dashboard</span>
-  </mat-toolbar>
-  
-  <div class="dashboard-container">
-    <!-- Summary Cards -->
-    <div class="summary-cards">
-      <mat-card *ngFor="let card of summaryCards" class="summary-card">
-        <mat-card-header>
-          <mat-icon class="summary-icon">{{ card.icon }}</mat-icon>
-          <h3> {{ card.title }}</h3>
-        </mat-card-header>
-        <mat-card-content>
-          <p *ngFor="let metric of card.metrics" class="metric">
-            {{ metric.label }}: <span class="metric-value">{{ metric.value }}</span>
-          </p>
-        </mat-card-content>
-      </mat-card>
-    </div>
-  
-    <!-- Charts Section -->
-    <div class="charts-container">
-      <!-- Pie Chart -->
-      <div class="chart pie-chart-container">
-        <h3>Training Program Status</h3>
-        <canvas id="MyPieChart"></canvas>
-      </div>
-  
-      <!-- Bar Chart -->
-      <div class="chart bar-chart-container">
-        <h3>Assessment Performance  </h3>
-        <canvas id="MyBarChart"></canvas>
-      </div>
+    <!-- Bar Chart -->
+    <div class="chart bar-chart-container">
+      <h3>Assessment Performance </h3>
+      <canvas id="MyBarChart"></canvas>
     </div>
   </div>
-  
+</div>

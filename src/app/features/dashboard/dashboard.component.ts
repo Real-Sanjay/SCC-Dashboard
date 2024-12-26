@@ -9,21 +9,10 @@ Chart.register(...registerables);
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  // traineesCount: number = 0;
-  // trainersCount: number = 0;
-  // ongoingTrainings: number = 0;
-  // completedTrainings: number = 0;
-  // scheduledTrainings: number = 0;
+  PieChart: any;
+  BarChart: any;
 
-  // ngOnInit(): void {
-  //   // Example: Fetch data from API or service
-  //   this.traineesCount = 120; // Replace with actual API call
-  //   this.trainersCount = 20;
-  //   this.ongoingTrainings = 5;
-  //   this.completedTrainings = 50;
-  //   this.scheduledTrainings = 3;
-  // }
-
+  constructor() { }
 
   summaryCards = [
     {
@@ -60,9 +49,9 @@ export class DashboardComponent implements OnInit {
     },
   ];
 
-  
-//-----------------Training Schedule-------------------
-  public PieChartConfig : any = {
+
+  //-----------------Training Schedule-------------------
+  public PieChartConfig: any = {
     type: 'pie',
     data: {
       labels: [
@@ -82,62 +71,52 @@ export class DashboardComponent implements OnInit {
   };
 
 
-//-----------------Assesment Scores-------------------
-public BarChartConfig: any = {
-  type: 'bar',
-  data: {
-    labels: ['Program 1', 'Program 2', 'Program 3', 'Program 4', 'Program 5', 'Program 6', 'Program 7'],
-    datasets: [{
-      label: 'Total Marks',
-      data: [80, 90, 80, 70, 85, 75, 90],
-      backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',
-        
-      ],
-      borderColor: [
-        'rgb(255, 99, 132)',
-        
-      ],
-      borderWidth: 1
-    },
-    {
-      label: 'Average Scores',
-      data: [70, 80, 75, 65, 80, 70, 85],
-      backgroundColor: [
-        
-        'rgba(54, 162, 235, 0.2)',
-        
-      ],
-      borderColor: [
-        
-        'rgb(54, 162, 235)',
-        
-      ],
-      borderWidth: 1
-    }
-  ],
-    
-  },
-  options: {
-    scales: {
-      y: {
-        beginAtZero: true
+  //-----------------Assesment Scores-------------------
+  public BarChartConfig: any = {
+    type: 'bar',
+    data: {
+      labels: ['Program 1', 'Program 2', 'Program 3', 'Program 4', 'Program 5', 'Program 6', 'Program 7'],
+      datasets: [{
+        label: 'Total Marks',
+        data: [80, 90, 80, 70, 85, 75, 90],
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+
+        ],
+        borderColor: [
+          'rgb(255, 99, 132)',
+
+        ],
+        borderWidth: 1
+      },
+      {
+        label: 'Average Scores',
+        data: [70, 80, 75, 65, 80, 70, 85],
+        backgroundColor: [
+          'rgba(54, 162, 235, 0.2)',
+        ],
+        borderColor: [
+          'rgb(54, 162, 235)',
+        ],
+        borderWidth: 1
       }
-    }
-  },
-};
+      ]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    },
+  };
 
 
-
-
-  PieChart:any;
-  BarChart:any;
-  
-  ngOnInit(): void { 
+  ngOnInit(): void {
     this.PieChart = new Chart('MyPieChart', this.PieChartConfig);
     this.BarChart = new Chart('MyBarChart', this.BarChartConfig);
   }
-  
+
 }
 
 
