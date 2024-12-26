@@ -1,0 +1,25 @@
+<mat-card class="report-card">
+    <mat-card-header>
+      <mat-card-title>Trainee Report:</mat-card-title>
+      <button class="close-button" (click)="closeDialog()">X</button>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="student-info">
+        <p><strong>Trainee Name:</strong> {{student.traineeName}}</p>
+        <div *ngFor="let topic of topics" class="marks">
+          <p class="topic-name"><strong>{{topic.names}}</strong></p>
+          <div class="score-percentage">
+            <p><strong>Score:</strong> {{student[topic.names + 'Score']}}</p>
+            <p><strong>{{topic.topicName}} Percentage:</strong> {{student[topic.names + 'Percentage']}}</p>
+          </div>
+          <hr>
+        </div>
+        <p><strong>Overall Score:</strong> {{student.overallScore}}</p>
+        <p><strong>Overall Percentage:</strong> {{student.overallPercentage}}</p>
+      </div>
+      <div class="button-container">
+        <!-- <button class="ok-button">OK</button> -->
+      </div>
+    </mat-card-content>
+  </mat-card>
+  
