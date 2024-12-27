@@ -154,6 +154,10 @@ export class ProgramsAddEditComponent implements OnInit {
     }
   }
 
+  
+  onCancel(): void {
+    this.dialogRef.close();
+  }
  
 
 
