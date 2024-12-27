@@ -1,119 +1,170 @@
-.bg{
-    padding:10px 10px;
-    background-color:whitesmoke;
+.heading{
+  text-align: center;
+  margin-top: 0px;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
-    form {
-    max-width: 800px;
-    margin: 100px auto;
-    padding: 20px;
-    background-color:rgb(18, 18, 92);
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    color:white;
-    font-style: italic;
-    font-weight: normal;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 15px;;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  form div {
-    margin-bottom: 15px;
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  input[type="text"],
-  input[type="number"] {
-    background-color: whitesmoke;
-    width: 50.33%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-  }
-  
-  button {
-    display: inline-block;
-    padding: 10px 20px;
-    margin-top: 10px;
-    margin-right: 10px;
-    background-color: #0461c5;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  button:hover {
-    background-color: #092747;
-  }
-  
-  button[type="submit"] {
-    background-color: #28a745;
-    align-items:end;
-  }
-  
-  button[type="submit"]:hover {
-    background-color: #218838;
-  }
-  
-  .trainee-box {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  
-  .trainee-box label {
-    margin-right: 10px;
-  }
-  
-  .trainee-box input {
-    margin-right: 10px;
-    flex: 1;
-  }
+// .scorebox{
+//   border: 2px solid rgb(221, 208, 208);
+//   border-radius:8px ;
+//   padding: 10px;
+// }
+.form{
+  width:700px;
+  margin-top: 0px;
+}
 
-  .scorebox {
-    display: flex;
-    flex-direction: column;
-    gap: 5px; /* Space between each trainee box */
-    color: white;
-    background-color: rgb(46, 46, 138);
-    padding: 10px;
-    border-radius:5px;
+.content {
+  padding-top: 8px;
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+
+  mat-form-field {
+      width: 100%;
+  }}
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+.names{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+action{
+  padding: 0px 25px 20px;
+  button{
+      flex:1;
   }
+}
+
+
+// .bg{
+//     padding:10px 10px;
+//     background-color:whitesmoke;
+// }
+//     form {
+//     max-width: 800px;
+//     margin: 100px auto;
+//     padding: 20px;
+//     background-color:rgb(18, 18, 92);
+//     border: 1px solid #ddd;
+//     border-radius: 8px;
+//     color:white;
+//     font-style: italic;
+//     font-weight: normal;
+//     font-family: Arial, Helvetica, sans-serif;
+//     font-size: 15px;;
+//     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+//   }
   
-  .scorebox > div {
-    display: flex;
-    align-items: center;
-    gap: 0px; /* Space between each label and input */
-    padding: 10px;
-    border: 1px solid rgb(46, 46, 138);
-    border-radius: 8px;
-    background-color: rgb(46, 46, 138);
-    padding-bottom: 0px;
-    margin-bottom: 3px;
-    padding-top: 3px;
-    margin-top: 0px;
-  }
+//   form div {
+//     margin-bottom: 15px;
+//   }
   
-  .scorebox label {
-    margin-right: 5px;
-    font-weight: bold;
-  }
+//   label {
+//     display: block;
+//     margin-bottom: 5px;
+//     font-weight: bold;
+//   }
   
-  .scorebox input[type="text"],
-  .scorebox input[type="number"] {
-    flex: 1;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    margin-right: 8px;
-  }
+//   input[type="text"],
+//   input[type="number"] {
+//     background-color: whitesmoke;
+//     width: 50.33%;
+//     padding: 8px;
+//     border: 1px solid #ccc;
+//     border-radius: 4px;
+//     box-sizing: border-box;
+//   }
+  
+//   button {
+//     display: inline-block;
+//     padding: 10px 20px;
+//     margin-top: 10px;
+//     margin-right: 10px;
+//     background-color: #0461c5;
+//     color: white;
+//     border: none;
+//     border-radius: 4px;
+//     cursor: pointer;
+//     font-size: 16px;
+//   }
+  
+//   button:hover {
+//     background-color: #092747;
+//   }
+  
+//   button[type="submit"] {
+//     background-color: #28a745;
+//     align-items:end;
+//   }
+  
+//   button[type="submit"]:hover {
+//     background-color: #218838;
+//   }
+  
+//   .trainee-box {
+//     display: flex;
+//     align-items: center;
+//     margin-bottom: 10px;
+//   }
+  
+//   .trainee-box label {
+//     margin-right: 10px;
+//   }
+  
+//   .trainee-box input {
+//     margin-right: 10px;
+//     flex: 1;
+//   }
+
+//   .scorebox {
+//     display: flex;
+//     flex-direction: column;
+//     gap: 5px; /* Space between each trainee box */
+//     color: white;
+//     background-color: rgb(46, 46, 138);
+//     padding: 10px;
+//     border-radius:5px;
+//   }
+  
+//   .scorebox > div {
+//     display: flex;
+//     align-items: center;
+//     gap: 0px; /* Space between each label and input */
+//     padding: 10px;
+//     border: 1px solid rgb(46, 46, 138);
+//     border-radius: 8px;
+//     background-color: rgb(46, 46, 138);
+//     padding-bottom: 0px;
+//     margin-bottom: 3px;
+//     padding-top: 3px;
+//     margin-top: 0px;
+//   }
+  
+//   .scorebox label {
+//     margin-right: 5px;
+//     font-weight: bold;
+//   }
+  
+//   .scorebox input[type="text"],
+//   .scorebox input[type="number"] {
+//     flex: 1;
+//     padding: 8px;
+//     border: 1px solid #ccc;
+//     border-radius: 4px;
+//     box-sizing: border-box;
+//     margin-right: 8px;
+//   }
   

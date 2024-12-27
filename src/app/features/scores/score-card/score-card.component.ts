@@ -8,6 +8,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { ViewTopicComponent } from '../view-topic/view-topic.component';
 import { ViewTraineeReportComponent } from '../view-trainee-report/view-trainee-report.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { CreateScoreCardComponent } from '../create-score-card/create-score-card.component';
+import { AddColumnComponent } from '../add-column/add-column.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-score-card',
@@ -35,7 +38,7 @@ export class ScoreCardComponent implements OnInit,AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private scorecardservice: ScoresService,private dialog:MatDialog) {
+  constructor(private scorecardservice: ScoresService,private dialog:MatDialog,private router:Router) {
     this.dataSource = new MatTableDataSource(this.scorecard);
     this.paginator = {} as MatPaginator;
     this.sort = {} as MatSort;
@@ -139,7 +142,6 @@ export class ScoreCardComponent implements OnInit,AfterViewInit {
     });
 
     // this.dialogRef
-
     dialogRef.afterClosed().subscribe(result=>{
       console.log(`Dialog Result: ${result}`);
     })
@@ -153,13 +155,46 @@ export class ScoreCardComponent implements OnInit,AfterViewInit {
 
     dialogRef.afterClosed().subscribe(result=>{
       console.log(`Dialog Result: ${result}`);
-    })
+    });
   }
 
+  //create score card Dialog box
+  createScoreCardDialog(){
+    const dialogRef = this.dialog.open(CreateScoreCardComponent);
+    
+    dialogRef.afterClosed().subscribe(result=>{
+     if(result){
+      this.loadScoreCards();
+      // this.router.navigate['/scorec'];
+     }
+    });
+
+  }
+
+  //AddColumn score card dialog box
+  AddScoreCardDialog(){
+    const dialogRef = this.dialog.open(AddColumnComponent);
+    
+    dialogRef.afterClosed().subscribe(result=>{
+      console.log(`Dialog Result: ${result}`);
+    });
+  }
+
+  editDialog(id:string){
   
+     const dialogRef = this.dialog.open(CreateScoreCardComponent, {
+      data: { id: id }
+    });
 
+    // this.dialogRef
+    dialogRef.afterClosed().subscribe(result=>{
+      console.log(`Dialog Result: ${result}`);
+      // if(result){
+      //   this.loadScoreCards();
+      // }
+    })
 
-
+  }
 }
 
 

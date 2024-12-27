@@ -72,18 +72,19 @@
 
   table th{
     font-size: 14px;
-    background-color:rgb(8, 8, 66);
+    background-color:#7986cb;
     color: white;
     margin-left: 100px;
     // align-items:flex-start;
     // width: 1000px;
-    padding-left: 10px;
+    padding-left: 20px;
+    text-align: left;
   }
 
   table td{
     color: #000;
-    text-align: center;
-    padding-left: 0px;
+    text-align:left;
+    padding-left: 25px;
     font-size: 15px;
     // justify-content: center;
   }
@@ -99,15 +100,14 @@
     color: rgb(23, 19, 216);
     cursor: pointer;
   }
-  .column1{
-    color: white;
-    padding: 100px;
-    background-color: rgb(218, 78, 13);
-  }
+  
 
-  .column1 th{
-    color: white;
+  .column1{
+    background-color: blue;
   }
+  // .column1 th{
+  //   color: white;
+  // }
 
   // CSS for Table
 
