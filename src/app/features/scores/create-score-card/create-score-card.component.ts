@@ -32,8 +32,8 @@ export class CreateScoreCardComponent implements OnInit{
 
     let id=this.activatedroute.snapshot.paramMap.get('id');
 
-    if(id){
-      this.scorecardservice.getScoreCardById(id).subscribe(card=>{
+    if(this.d.id){
+      this.scorecardservice.getScoreCardById(this.d.id).subscribe(card=>{
         if(card){
           this.scoreCardForm.patchValue(card);
         }
@@ -85,19 +85,19 @@ export class CreateScoreCardComponent implements OnInit{
   savePost() {
     let id=this.activatedroute.snapshot.paramMap.get('id');
     
-    if(id){
-      this.scorecardservice.updateScoreCard(id,this.scoreCardForm.value).subscribe(()=>{
+    if(this.d.id){
+      this.scorecardservice.updateScoreCard(this.d.id,this.scoreCardForm.value).subscribe(()=>{
         console.log('Score crad updated Successfully');
-        this.router.navigate(['/scorec'])
+        // this.router.navigate(['/scorec'])
         this.dialogRef.close(true);
       })
     }else{
       this.scorecardservice.createScoreCard(this.scoreCardForm.value).subscribe({
         next:(response)=>{
           alert('Score Card Saved Successfully');
-          this.dialogRef.close(true);
+          this.dialog.close(true);
           // console.log('successful');
-          this.router.navigate(['/scorec'])
+          // this.router.navigate(['/scorec'])
         },
         error:(error)=>{
           alert('Error Saving Score card, Please try again');
