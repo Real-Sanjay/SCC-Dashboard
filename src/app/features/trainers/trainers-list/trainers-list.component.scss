@@ -11,6 +11,9 @@
       padding: 12px;
     }
   }
+  .programs-container::-webkit-scrollbar{
+   width: 0px;
+  }
 
   .sticky-header {
    
@@ -85,25 +88,18 @@
     font-weight: 500;
     transition: all 0.3s ease;
 
-    &.test {
-      background-color: #fff3cd;
-      color: #856404;
-      
-      &:hover {
-        background-color: #ffecb5;
-      }
-    }
 
-    &.Not Available{
+
+    &.not.available{
       background-color: #ee0000;
-      color: #f8b6b6;
+      color: #ffffff;
       
       &:hover {
         background-color: #fc3200;
       }
     }
 
-    &.Available {
+    &.available {
       background-color: #d4edda;
       color: #155724;
       
@@ -112,6 +108,7 @@
       }
     }
   }
+
 
 
   .program-content {

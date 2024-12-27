@@ -31,6 +31,9 @@
     padding: 12px;
   }
 }
+.programs-container::-webkit-scrollbar{
+  width: 0px;
+}
 
 .program-grid {
   display: grid;
@@ -102,7 +105,7 @@
 
     &.cancelled{
       background-color: #ee0000;
-      color: #f8b6b6;
+      color: #ffffff;
       
       &:hover {
         background-color: #fc3200;
