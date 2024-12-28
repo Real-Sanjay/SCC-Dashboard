@@ -73,7 +73,7 @@ getTrainers(): void {
     this.filteredTrainers = this.trainers.filter(trainer => 
       trainer.trainerName.toLowerCase().includes(searchTerm) ||
       trainer.businessUnit.toLowerCase().includes(searchTerm) ||
-      // trainer.expertise.toLowerCase().includes(searchTerm) ||
+      trainer.expertise.some(exp => exp.toLowerCase().includes(searchTerm)) ||
       trainer.module.some(module => module.toLowerCase().includes(searchTerm)) ||
       trainer.topics.some(topic => topic.toLowerCase().includes(searchTerm))
     );
@@ -83,16 +83,6 @@ getTrainers(): void {
     this.searchControl.setValue('');
   }
 
-  createTrainer(trainerData: any) {
-    // this.programService.createTrainer(trainerData).subscribe({
-    //   next: (res) => {
-    //     this.getGroupedTrainers(); // Refresh the list after adding a new trainer
-    //   },
-    //   error: (err) => {
-    //     console.log(err);
-    //   }
-    // });
-  }
 
 
 

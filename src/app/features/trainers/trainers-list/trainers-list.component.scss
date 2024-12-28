@@ -195,39 +195,7 @@
     }
   }
   
-  
-  // .trainer-details {
-  //   padding: 18px;
-
-  //   p {
-  //     display: flex;
-  //     align-items: center;
-  //     padding-bottom: 20px;
-  //     margin: 8px 0;
-  //     color: #333;
-  //     opacity: 0;
-  //     animation: slideIn 0.5s ease forwards;
-  //     white-space: normal; /* Prevent text wrapping */
-  //     overflow: hidden; /* Hide overflow */
-  //     text-overflow: ellipsis; /* Add ellipsis for long text */
-  
-  //     @for $i from 1 through 5 {
-  //       &:nth-child(#{$i}) {
-  //         animation-delay: #{$i * 0.1}s;
-  //       }
-  //     }
-  
-  //     mat-icon {
-  //       font-size: 18px;
-  //       width: 18px;
-  //       height: 18px;
-  //       margin-right: 8px;
-  //       color: #666;
-  //       flex-shrink: 0; /* Prevent icon shrinking */
-  //     }
-  // }
-  // }
-  
+ 
   mat-card-actions {
     padding: 16px;
     display: flex;

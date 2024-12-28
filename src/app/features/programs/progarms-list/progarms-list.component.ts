@@ -19,8 +19,8 @@ export class ProgarmsListComponent implements OnInit{
 
   programs: Program[] = [];// holds the fetched programs
   groupedPrograms: any[] = [];// holds the grouped programs
-  filteredPrograms: any[] = [];
-  searchControl = new FormControl('');
+  filteredPrograms: any[] = [];// holds filtered data
+  searchControl = new FormControl('');// creates form control for search items
 
 
 
