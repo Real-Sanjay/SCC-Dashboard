@@ -53,8 +53,9 @@ export class ViewTraineeReportComponent implements OnInit{
         topic.SCCTrainee.forEach((trainee: any) => {
           if (!traineeMap[trainee.traineeName]) {
             traineeMap[trainee.traineeName] = 
-            { traineeName: trainee.traineeName, overallScore: 0, overallPercentage: 0, rank: 0 };
+            { traineeName: trainee.traineeName, overallScore: 0, overallPercentage: 0, rank: 0, totalscore:0 };
           }
+          traineeMap[trainee.traineeName].totalscore+=topic.totalMarks;
           traineeMap[trainee.traineeName]['_id'] = topic._id;
           traineeMap[trainee.traineeName][topic.topicName + 'Score'] = trainee.assessmentScore;
           traineeMap[trainee.traineeName][topic.topicName + 'Percentage'] = trainee.percentage;
@@ -65,7 +66,7 @@ export class ViewTraineeReportComponent implements OnInit{
       const trainees = Object.values(traineeMap);
       
     trainees.forEach((trainee: any) => {
-      trainee.overallPercentage = parseFloat((trainee.overallPercentage / this.topics.length).toFixed(2));
+      trainee.overallPercentage = parseFloat(((trainee.overallScore/ trainee.totalscore)*100).toFixed(2));
     });
 
       return trainees;

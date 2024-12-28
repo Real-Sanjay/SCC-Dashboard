@@ -12,12 +12,10 @@ export class ScoresService {
   constructor(private http: HttpClient) {}
 
   getScoreCard(): Observable<any> {
-    // console.log('loaded');
     return this.http.get(this.apiUrl);
   }
 
   getScoreCardById(id: string): Observable<any> {
-    // return this.http.get<any>(`${this.apiUrl}${id}`); 
     console.log(this.apiUrl+id)
     return this.http.get<any>(this.apiUrl+id); 
   }
@@ -30,10 +28,10 @@ export class ScoresService {
     return this.http.put<void>(this.apiUrl+id,scorecard); 
   }
 
-  deleteScoreCard(id: string): Observable<void> {
-    console.log(id);
+  deleteScoreCard(id: string): Observable<any> {
+    // console.log(id);
     this.apiUrl=`${this.apiUrl}${id}`;
-    console.log(this.apiUrl);
+    // console.log(this.apiUrl);
     return this.http.delete<void>(this.apiUrl);
   }
 }
