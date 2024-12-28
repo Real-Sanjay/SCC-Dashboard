@@ -119,7 +119,7 @@ loadScoreCards() {
 
   }
 
-//deleting topic from Database
+//deleting topic from Databasee
   delete(id:string){
     this.scorecardservice.deleteScoreCard(id).subscribe({
       next:(res)=>{

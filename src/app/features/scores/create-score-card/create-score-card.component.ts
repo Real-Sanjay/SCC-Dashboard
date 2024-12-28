@@ -81,32 +81,46 @@ export class CreateScoreCardComponent implements OnInit{
   }
 
   savePost(): void {
+
+    let flag: boolean=false;
     if (this.scoreCardForm.valid) {
-      console.log('Form Valid:', this.scoreCardForm.valid);
-      console.log('Form Value:', this.scoreCardForm.value);
-  
+
       if (this.d && this.d.id) {
-        this.scorecardservice.updateScoreCard(this.d.id, this.scoreCardForm.value).subscribe(() => {
-          console.log('Score card updated Successfully');
-          this.snackBar.openSnackBar('Score card updated', 'Success');
-          this.dialog.close(true);
-        }, error => {
-          console.error('Error updating score card:', error);
-          this.snackBar.openSnackBar('Error updating score card', 'Update Failed');
-        });
-      } 
-      else {
-        this.scorecardservice.createScoreCard(this.scoreCardForm.value).subscribe({
-          next: (response) => {
-            this.snackBar.openSnackBar('Score card saved successfully', 'Success');
-            this.dialog.close(true);
-          },
-          error: (error) => {
-            console.error('Error saving score card:', error);
-            this.snackBar.openSnackBar('Error saving score card, Please try again', 'Save Failed');
+              this.scorecardservice.updateScoreCard(this.d.id, this.scoreCardForm.value).subscribe(() => {
+                console.log('Score card updated Successfully');
+                this.snackBar.openSnackBar('Score card updated', 'Success');
+                this.dialog.close(true);
+              }, error => {
+                console.error('Error updating score card:', error);
+                this.snackBar.openSnackBar('Error updating score card', 'Update Failed');
+              });
+            }
+      else{
+        this.scorecardservice.getScoreCard().subscribe({
+          next:(data)=>{
+            data.forEach((topic:any)=>{
+              if(this.scoreCardForm.value.topicName==topic.topicName){
+                console.log('score card exists');
+                flag=true;
+              }
+            });
+            if(flag){
+              this.snackBar.openSnackBar('Score card already exists', 'failed');
+            }else{
+              this.scorecardservice.createScoreCard(this.scoreCardForm.value).subscribe({
+                next: (response) => {
+                  this.snackBar.openSnackBar('Score card saved successfully', 'Success');
+                  this.dialog.close(true);
+                },
+                error: (error) => {
+                  console.error('Error saving score card:', error);
+                  this.snackBar.openSnackBar('Error saving score card, Please try again', 'Save Failed');
+                }
+              });
+            }
           }
-        });
-      }
+        }); 
+      } 
     } else {
       this.snackBar.openSnackBar('Score card is Invalid', 'Save Failed');
     }

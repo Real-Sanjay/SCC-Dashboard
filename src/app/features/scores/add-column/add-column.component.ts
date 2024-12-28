@@ -87,18 +87,38 @@ export class AddColumnComponent implements OnInit {
 
 
   savePost() {
-        this.scorecardservice.createScoreCard(this.AddColumnForm.value).subscribe({
-          next:(response)=>{
-            //alert('Score Card Saved Successfully');
-            // console.log('successful');
-            // this.router.navigate(['/scorec'])
-            this.dialog.close(true);
-            this.loadScoreCards();
-            this.snackBar.openSnackBar('Column Added successfully', 'Success');
-          },
-          error:(error)=>{
-            alert('Error Saving Score card, Please try again');
+
+      let flag: boolean=false;
+      if (this.AddColumnForm.valid) {
+      
+        this.scorecardservice.getScoreCard().subscribe({
+          next:(data)=>{
+            data.forEach((topic:any)=>{
+              if(this.AddColumnForm.value.topicName==topic.topicName){
+                console.log('score card exists');
+                flag=true;
+              }
+            });
+            if(flag){
+              this.snackBar.openSnackBar('Score card already exists', 'failed');
+              this.dialog.close(true);
+              this.loadScoreCards();
+            }else{
+              this.scorecardservice.createScoreCard(this.AddColumnForm.value).subscribe({
+                next:(response)=>{
+                  this.dialog.close(true);
+                  this.loadScoreCards();
+                  this.snackBar.openSnackBar('Column Added successfully', 'Success');
+                },
+                error:(error)=>{
+                  alert('Error Saving Score card, Please try again');
+                }
+              });  
+            }
           }
-        });
+        }); 
+      } else {
+        this.snackBar.openSnackBar('Score card is Invalid', 'Save Failed');
+      }
   }
 }
