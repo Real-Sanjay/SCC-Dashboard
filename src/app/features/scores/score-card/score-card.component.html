@@ -5,7 +5,12 @@
   <button mat-raised-button (click)="AddScoreCardDialog()" >+ Add Column</button><br>
   <button mat-raised-button (click)="createScoreCardDialog()">Create</button>
 </div>
+
   
+  <!-- <mat-form-field> -->
+    <!-- <mat-label>Filter</mat-label>
+     <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>  -->
+   <!-- </mat-form-field>  -->
   <div mat-table class="mat-elevation-z8">
   <table mat-table [dataSource]="dataSource" matSort >
 
