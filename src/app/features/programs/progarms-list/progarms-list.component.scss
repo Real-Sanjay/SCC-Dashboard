@@ -17,6 +17,27 @@
     background-color: white;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
+.search-container {
+  flex: 1;
+  max-width: 400px;
+  margin-top: 20px;
+  margin-right: 35px;
+  padding: 0px;
+  
+  
+}
+
+.search-field {
+  width: 100%;
+  
+  ::ng-deep .mat-form-field-wrapper {
+    margin-bottom: -1.25em;
+  }
+  
+  ::ng-deep .mat-form-field-flex {
+    align-items: center;
+  }
+}
 
 .example-spacer {
   flex: 1 1 auto;
@@ -185,7 +206,8 @@
 
   p {
     display: flex;
-    align-items: center;
+    
+    align-items: ceil($number: 0);
     padding-bottom: 20px;
     margin: 8px 0;
     color: #333;

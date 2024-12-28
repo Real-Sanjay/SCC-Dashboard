@@ -1,17 +1,32 @@
 <mat-toolbar class="sticky-header" >
     <span>Trainers</span>
     <span class="example-spacer"></span>
+
+    <div class="search-container">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-icon matPrefix>search</mat-icon>
+        <input matInput 
+               [formControl]="searchControl" 
+               placeholder="Search Trainer by name"
+               (keyup)="onSearch()">
+        <button mat-icon-button matSuffix *ngIf="searchControl.value" (click)="clearSearch()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+  
+  
     
     <button mat-raised-button color="primary" (click)="openAddEditForm()">
       
       <mat-icon>add</mat-icon>
-      <span>New Program</span>
+      <span>Add Trainer</span>
     </button>
   </mat-toolbar>
   
   <div class="programs-container">
-    <div class="program-grid">
-      <mat-card class="program-card" *ngFor="let trainer of trainers">
+    <div class="program-grid" *ngIf="filteredTrainers.length>0; else noTrainers" >
+      <mat-card class="program-card" *ngFor="let trainer of filteredTrainers">
         <mat-card-header>
           <mat-card-title>{{ trainer.trainerName }}</mat-card-title>
           <div class="status-badge" [ngClass]="trainer.status.toLowerCase()"> 
@@ -55,3 +70,8 @@
     </div>
   </div>
    
+  <ng-template #noTrainers>
+    <div class="no-trainers-message">
+      <p>No trainers available. Click the add trainer button  to add a new trainer.</p>
+    </div>
+  </ng-template>

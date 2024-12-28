@@ -4,6 +4,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { ProgramsAddEditComponent } from './programs-add-edit/programs-add-edit.component';
 import { Program } from 'src/app/core/interfaces/programs.interface';
 import { SnackBarService } from 'src/app/core/services/snackBar.service';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
+import { FormControl } from '@angular/forms';
 
 
 
@@ -17,6 +19,8 @@ export class ProgarmsListComponent implements OnInit{
 
   programs: Program[] = [];// holds the fetched programs
   groupedPrograms: any[] = [];// holds the grouped programs
+  filteredPrograms: any[] = [];
+  searchControl = new FormControl('');
 
 
 
@@ -29,6 +33,12 @@ export class ProgarmsListComponent implements OnInit{
   // Lifecycle hook to fetch the programs when the component is initialized
   ngOnInit(): void {
     this.fetchProgramDetails();
+    this.searchControl.valueChanges.pipe(
+      debounceTime(300),
+      distinctUntilChanged()
+    ).subscribe(() => {
+      this.onSearch();
+    });
   }
 
 
@@ -37,6 +47,7 @@ export class ProgarmsListComponent implements OnInit{
     this.programService.getPrograms().subscribe({
       next: (programs: Program[]) => {
         this.groupProgramsByModule(programs); // Group the fetched programs by module
+        this.filteredPrograms = [...this.groupedPrograms];
       },
       error: (err) => {
         console.error('Error fetching programs:', err);
@@ -71,7 +82,37 @@ export class ProgarmsListComponent implements OnInit{
 
 
   
+  onSearch(): void {
+    const searchTerm = (this.searchControl.value || '').toLowerCase().trim();
+    
+    if (!searchTerm) {
+      this.filteredPrograms = this.groupedPrograms;
+      return;
+    }
 
+    // Filter the programs based on search term
+    const filteredGroups = this.groupedPrograms.map(group => {
+      const filteredTrainers = group.trainers.filter((trainer: { module: string; trainer: string; trainingStatus:string }) =>
+        trainer.module.toLowerCase().includes(searchTerm) ||
+        trainer.trainer.toLowerCase().includes(searchTerm) 
+        
+      );
+
+      if (filteredTrainers.length > 0) {
+        return {
+          ...group,
+          trainers: filteredTrainers
+        };
+      }
+      return null;
+    }).filter(group => group !== null);
+
+    this.filteredPrograms = filteredGroups;
+  }
+
+  clearSearch(): void {
+    this.searchControl.setValue('');
+  }
   
 
 

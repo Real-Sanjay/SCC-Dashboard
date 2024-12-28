@@ -4,6 +4,8 @@ import { TrainersAddEditComponent } from './trainers-add-edit/trainers-add-edit.
 import { Trainer } from 'src/app/core/interfaces/trainers.interface';
 import { SnackBarService } from 'src/app/core/services/snackBar.service';
 import { TrainerService } from 'src/app/core/services/trainers.service';
+import { FormControl } from '@angular/forms';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 
 
@@ -15,28 +17,71 @@ import { TrainerService } from 'src/app/core/services/trainers.service';
 export class TrainersListComponent implements OnInit {
   trainers: Trainer[] = [];
 
- 
+  filteredTrainers: Trainer[] = [];
+  searchControl = new FormControl('');
 
   constructor(private trainerService: TrainerService, private dialog: MatDialog, private snackBar: SnackBarService) {}
 
   ngOnInit(): void {
     this.getTrainers();
+
+    this.searchControl.valueChanges.pipe(
+      debounceTime(300),
+      distinctUntilChanged()
+    ).subscribe(() => {
+      this.onSearch();
+    });
   }
 
 
+//ol search 
+// getTrainers(): void{
+// this.trainerService.getAllTrainers().subscribe({
+//   next: (res) =>{
+//     this.trainers = res;
+//     console.log(this.trainers);
+//   },
+//   error: (err) =>{
+//     console.log("Error occured while getting data", err);
+//   }
+// });
 
-getTrainers(): void{
-this.trainerService.getAllTrainers().subscribe({
-  next: (res) =>{
-    this.trainers = res;
-    console.log(this.trainers);
-  },
-  error: (err) =>{
-    console.log("Error occured while getting data", err);
-  }
-});
+// }
 
+getTrainers(): void {
+  this.trainerService.getAllTrainers().subscribe({
+    next: (res) => {
+      this.trainers = res;
+      this.filteredTrainers = [...this.trainers]; // Initialize filtered trainers
+      console.log(this.trainers);
+    },
+    error: (err) => {
+      console.log("Error occurred while getting data", err);
+    }
+  });
 }
+
+
+ onSearch(): void {
+    const searchTerm = (this.searchControl.value || '').toLowerCase().trim();
+    
+    if (!searchTerm) {
+      this.filteredTrainers = [...this.trainers];
+      return;
+    }
+
+    this.filteredTrainers = this.trainers.filter(trainer => 
+      trainer.trainerName.toLowerCase().includes(searchTerm) ||
+      trainer.businessUnit.toLowerCase().includes(searchTerm) ||
+      // trainer.expertise.toLowerCase().includes(searchTerm) ||
+      trainer.module.some(module => module.toLowerCase().includes(searchTerm)) ||
+      trainer.topics.some(topic => topic.toLowerCase().includes(searchTerm))
+    );
+  }
+
+  clearSearch(): void {
+    this.searchControl.setValue('');
+  }
 
   createTrainer(trainerData: any) {
     // this.programService.createTrainer(trainerData).subscribe({
