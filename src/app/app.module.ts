@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
-
+import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterOutlet } from '@angular/router';
+import { MatCardModule } from '@angular/material/card';
+import { MatGridListModule } from '@angular/material/grid-list';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatIconModule} from '@angular/material/icon';
@@ -20,11 +22,13 @@ import { TraineesListComponent } from './features/trainees/trainees-list/trainee
 import { TraineesAddEditComponent } from './features/trainees/trainees-list/trainees-add-edit/trainees-add-edit.component';
 import { ScoresComponent } from './features/scores/scores.component';
 
-
+import { HighchartsChartModule } from 'highcharts-angular';
 
 
 //creating a constant array of all the modules
 const uxModules = [
+  MatCardModule,
+  MatGridListModule,
   MatButtonModule,
   MatSidenavModule,
   MatIconModule,
@@ -53,6 +57,8 @@ const uxModules = [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule, 
+    HighchartsChartModule,
+    HttpClientModule,
     uxModules
   ],
   providers: [],
