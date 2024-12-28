@@ -80,6 +80,7 @@ loadScoreCards() {
       },
       error: (error) => {
         console.error('There is an error!', error);
+        console.log(error.url);
       }
     });
   }
@@ -92,20 +93,21 @@ loadScoreCards() {
       topic.SCCTrainee.forEach((trainee: any) => {
         if (!traineeMap[trainee.traineeName]) {
           traineeMap[trainee.traineeName] = 
-          { traineeName: trainee.traineeName, overallScore: 0, overallPercentage: 0, rank: 0 };
+          { traineeName: trainee.traineeName, overallScore: 0, overallPercentage: 0, rank: 0, totalscore:0};
         }
+        traineeMap[trainee.traineeName].totalscore+=topic.totalMarks;
         traineeMap[trainee.traineeName]['_id'] = topic._id;
         traineeMap[trainee.traineeName][topic.topicName + 'Score'] = trainee.assessmentScore;
-        traineeMap[trainee.traineeName][topic.topicName + 'Percentage'] = trainee.percentage;
+        traineeMap[trainee.traineeName][topic.topicName + 'Percentage'] = trainee.percentage.toFixed(2);
         traineeMap[trainee.traineeName].overallScore += trainee.assessmentScore;
-        traineeMap[trainee.traineeName].overallPercentage += trainee.percentage;
+        traineeMap[trainee.traineeName].overallPercentage = trainee.percentage;
       });
     });
 
     //calculating overall percentage
     const trainees = Object.values(traineeMap);
     trainees.forEach((trainee: any) => {
-      trainee.overallPercentage = parseFloat((trainee.overallPercentage / this.topics.length).toFixed(2));
+      trainee.overallPercentage = parseFloat(((trainee.overallScore/ trainee.totalscore)*100).toFixed(2));
     });
     //calculating Rank
     trainees.sort((a: any, b: any) => b.overallScore - a.overallScore);
@@ -122,14 +124,12 @@ loadScoreCards() {
     this.scorecardservice.deleteScoreCard(id).subscribe({
       next:(res)=>{
         console.log('deleted score-card successfully.');
-         this.helper();
-        
+         this.helper();  
       },
       error:(error)=>{
-        console.log(error);
+        console.log(error.url);
 
-      }
-      
+      } 
     });
   }
 

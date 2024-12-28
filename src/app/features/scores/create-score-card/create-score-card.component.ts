@@ -31,11 +31,6 @@ export class CreateScoreCardComponent implements OnInit{
       SCCTrainee: this.fb.array([this.createTrainee()],Validators.required)
     });
 
-    console.log('this id');
-    console.log(this.d.id);
-
-    //let id=this.activatedroute.snapshot.paramMap.get('id');
-
     //getting id from parent compoennent Scorecard component
     if(this.d.id){
       this.scorecardservice.getScoreCardById(this.d.id).subscribe(card=>{
@@ -43,11 +38,6 @@ export class CreateScoreCardComponent implements OnInit{
           this.scoreCardForm.patchValue(card);
         }
       });
-      // this.scorecardservice.updateScoreCard(this.d.id,this.scoreCardForm.value).subscribe(()=>{
-      //   console.log('Score card updated Successfully');
-      //   this.snackBar.openSnackBar('Score card updated', 'Success');
-      //   this.dialog.close(true);
-      // });
     }
 
   }
