@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { ScoresService } from 'src/app/core/services/scores.service';
 import { Router } from '@angular/router';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ScoreCardComponent } from '../score-card/score-card.component';
+import { SnackBarService } from 'src/app/core/services/snackBar.service';
 
 @Component({
   selector: 'app-add-column',
@@ -14,7 +17,10 @@ export class AddColumnComponent implements OnInit {
   scorecard: any[] = [];
   AddColumnForm: FormGroup = new FormGroup({});
 
-  constructor(private fb: FormBuilder, private scorecardservice: ScoresService, private router: Router) {}
+  constructor(private fb: FormBuilder, private scorecardservice: ScoresService, private router: Router,
+    private snackBar: SnackBarService,
+    private dialog:MatDialogRef<ScoreCardComponent>, @Inject(MAT_DIALOG_DATA)public d:{id:string}
+  ) {}
 
   ngOnInit(): void {
     this.AddColumnForm = this.fb.group({
@@ -83,9 +89,12 @@ export class AddColumnComponent implements OnInit {
   savePost() {
         this.scorecardservice.createScoreCard(this.AddColumnForm.value).subscribe({
           next:(response)=>{
-            alert('Score Card Saved Successfully');
-            console.log('successful');
-            this.router.navigate(['/scorec'])
+            //alert('Score Card Saved Successfully');
+            // console.log('successful');
+            // this.router.navigate(['/scorec'])
+            this.dialog.close(true);
+            this.loadScoreCards();
+            this.snackBar.openSnackBar('Column Added successfully', 'Success');
           },
           error:(error)=>{
             alert('Error Saving Score card, Please try again');

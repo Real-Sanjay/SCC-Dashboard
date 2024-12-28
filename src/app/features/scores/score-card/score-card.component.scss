@@ -1,8 +1,12 @@
 .create {
-    display: flex;
+    display:flex;
     justify-content: right;
     align-items: center;
+    width: 100%;
+    white-space-collapse:100%;
     padding: 10px;
+    left:0px;
+    right: 0px;
     background-color: #f0f0f0; /* Light grey background */
     border: 1px solid #ccc; /* Light grey border */
     border-radius: 5px; /* Rounded corners */
@@ -47,7 +51,7 @@
     max-width: 100%;
     margin:  100px auto;
     margin-top: 10px;
-    margin-left: 10px;
+    margin-left: 0px;
     padding: 20px;
     background-color:whitesmoke;
     border: 1px solid #ddd;
@@ -97,7 +101,7 @@
   }
   
   table th a:hover{
-    color: rgb(23, 19, 216);
+    color: rgb(9, 9, 14);
     cursor: pointer;
   }
   
@@ -163,6 +167,26 @@
   .mat-mdc-form-field {
     font-size: 14px;
     width: 100%;
+  }
+
+    table  th{
+    color:rgb(10, 10, 10);
+
+  }
+
+  table th:hover{
+    transform:scale(1.05);
+    cursor: pointer;
+    border-radius: 5px;
+  }
+
+  table th{
+    transition:transform .2s;
+  }
+
+  .create button:hover {
+    transform:scale(1.05);
+    cursor: pointer;
   }
 
 

@@ -1,5 +1,5 @@
 <!-- <p>create-score-card works!</p> -->
-<form class="form" [formGroup]="scoreCardForm"  >
+<form class="form" [formGroup]="scoreCardForm" (ngSubmit)="onSubmit()" >
   <div class="heading" mat-dialog-title>
     <h1>
         Add Score Card Details

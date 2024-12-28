@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MatInputModule } from '@angular/material/input';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ScoreCardComponent } from '../score-card/score-card.component';
+import { SnackBarService } from 'src/app/core/services/snackBar.service';
 
 @Component({
   selector: 'app-create-score-card',
@@ -18,26 +19,35 @@ export class CreateScoreCardComponent implements OnInit{
   scoreCardForm: FormGroup=new FormGroup({});
 
   constructor(private fb: FormBuilder,private scorecardservice: ScoresService,
-    private router:Router,private activatedroute:ActivatedRoute,private dialogRef :MatDialogRef<CreateScoreCardComponent>,
-    @Inject(MAT_DIALOG_DATA)public data:any,private dialog:MatDialogRef<ScoreCardComponent>,
-    @Inject(MAT_DIALOG_DATA)public d:{id:string}
+    private router:Router,private activatedroute:ActivatedRoute,private snackBar: SnackBarService,
+    private dialog:MatDialogRef<ScoreCardComponent>,
+    @Inject(MAT_DIALOG_DATA)public d:any
   ) {}
 
   ngOnInit(): void {
     this.scoreCardForm = this.fb.group({
       topicName: ['', Validators.required],
       totalMarks: [0, [Validators.required, Validators.min(0)]],
-      SCCTrainee: this.fb.array([this.createTrainee()])
+      SCCTrainee: this.fb.array([this.createTrainee()],Validators.required)
     });
 
-    let id=this.activatedroute.snapshot.paramMap.get('id');
+    console.log('this id');
+    console.log(this.d.id);
 
+    //let id=this.activatedroute.snapshot.paramMap.get('id');
+
+    //getting id from parent compoennent Scorecard component
     if(this.d.id){
       this.scorecardservice.getScoreCardById(this.d.id).subscribe(card=>{
         if(card){
           this.scoreCardForm.patchValue(card);
         }
-      })
+      });
+      // this.scorecardservice.updateScoreCard(this.d.id,this.scoreCardForm.value).subscribe(()=>{
+      //   console.log('Score card updated Successfully');
+      //   this.snackBar.openSnackBar('Score card updated', 'Success');
+      //   this.dialog.close(true);
+      // });
     }
 
   }
@@ -78,34 +88,38 @@ export class CreateScoreCardComponent implements OnInit{
 
   onSubmit(): void {
     // console.log(this.scoreCardForm.value);
-    
   }
 
-  // creating Score card and saving
-  savePost() {
-    let id=this.activatedroute.snapshot.paramMap.get('id');
-    
-    if(this.d.id){
-      this.scorecardservice.updateScoreCard(this.d.id,this.scoreCardForm.value).subscribe(()=>{
-        console.log('Score crad updated Successfully');
-        // this.router.navigate(['/scorec'])
-        this.dialogRef.close(true);
-      })
-    }else{
-      this.scorecardservice.createScoreCard(this.scoreCardForm.value).subscribe({
-        next:(response)=>{
-          alert('Score Card Saved Successfully');
+  savePost(): void {
+    if (this.scoreCardForm.valid) {
+      console.log('Form Valid:', this.scoreCardForm.valid);
+      console.log('Form Value:', this.scoreCardForm.value);
+  
+      if (this.d && this.d.id) {
+        this.scorecardservice.updateScoreCard(this.d.id, this.scoreCardForm.value).subscribe(() => {
+          console.log('Score card updated Successfully');
+          this.snackBar.openSnackBar('Score card updated', 'Success');
           this.dialog.close(true);
-          // console.log('successful');
-          // this.router.navigate(['/scorec'])
-        },
-        error:(error)=>{
-          alert('Error Saving Score card, Please try again');
-        }
-      });
+        }, error => {
+          console.error('Error updating score card:', error);
+          this.snackBar.openSnackBar('Error updating score card', 'Update Failed');
+        });
+      } 
+      else {
+        this.scorecardservice.createScoreCard(this.scoreCardForm.value).subscribe({
+          next: (response) => {
+            this.snackBar.openSnackBar('Score card saved successfully', 'Success');
+            this.dialog.close(true);
+          },
+          error: (error) => {
+            console.error('Error saving score card:', error);
+            this.snackBar.openSnackBar('Error saving score card, Please try again', 'Save Failed');
+          }
+        });
+      }
+    } else {
+      this.snackBar.openSnackBar('Score card is Invalid', 'Save Failed');
     }
-
-   
   }
-
+  
 }

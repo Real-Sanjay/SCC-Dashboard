@@ -30,7 +30,7 @@ export class ScoresService {
     return this.http.put<void>(this.apiUrl+id,scorecard); 
   }
 
-  deleteScoreCard(id: string): Observable<void> {
+  deleteScoreCard(id: string): Observable<any> {
     console.log(id);
     this.apiUrl=`${this.apiUrl}${id}`;
     console.log(this.apiUrl);

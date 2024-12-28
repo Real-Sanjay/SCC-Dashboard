@@ -1,13 +1,11 @@
 import { Component, OnInit,AfterViewInit,ViewChild } from '@angular/core';
 import { ScoresService } from 'src/app/core/services/scores.service';
-import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
-import {MatSort, MatSortModule} from '@angular/material/sort';
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
-import { ViewEncapsulation } from '@angular/core';
+import { MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
+import { MatSort, MatSortModule} from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule} from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { ViewTopicComponent } from '../view-topic/view-topic.component';
 import { ViewTraineeReportComponent } from '../view-trainee-report/view-trainee-report.component';
-import {MatFormFieldModule} from '@angular/material/form-field';
 import { CreateScoreCardComponent } from '../create-score-card/create-score-card.component';
 import { AddColumnComponent } from '../add-column/add-column.component';
 import { Router } from '@angular/router';
@@ -17,7 +15,6 @@ import { Router } from '@angular/router';
   standalone: false,
   templateUrl: './score-card.component.html',
   styleUrls: ['./score-card.component.scss'],
-  // encapsulation: ViewEncapsulation.None
 })
 export class ScoreCardComponent implements OnInit,AfterViewInit {
 
@@ -27,32 +24,25 @@ export class ScoreCardComponent implements OnInit,AfterViewInit {
   columnsToDisplay: string[] = this.displayedColumns.slice();
   dataSource: MatTableDataSource<any>;
 
-  // this.dataSource = new MatTableDataSource(this.scorecard);
-
-
   //for sorting and pagination
-  // @ViewChild(MatPaginator)
-  // paginator!: MatPaginator;
-  // @ViewChild(MatSort)
-  // sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private scorecardservice: ScoresService,private dialog:MatDialog,private router:Router) {
+
     this.dataSource = new MatTableDataSource(this.scorecard);
     this.paginator = {} as MatPaginator;
     this.sort = {} as MatSort;
 
-    const users = Array.from({length: 100});
-
-    // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(users);
   }
+
+  // life-cycle hook
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
 
+  //filter with Trainee Name
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -62,9 +52,11 @@ export class ScoreCardComponent implements OnInit,AfterViewInit {
     }
   }
 
+  // life-cycle hook
   ngOnInit(): void {
     this.loadScoreCards();
 
+    //DataSource filtering
     this.dataSource.filterPredicate = (data: any, filter: string) => {
       const dataStr = Object.keys(data).reduce((currentTerm: string, key: string) => {
         return currentTerm + (data as { [key: string]: any })[key] + '◬';
@@ -72,9 +64,11 @@ export class ScoreCardComponent implements OnInit,AfterViewInit {
 
       const transformedFilter = filter.trim().toLowerCase();
       return dataStr.indexOf(transformedFilter) !== -1;
-  }}
+  }
+}
 
-  loadScoreCards() {
+//loading score cards
+loadScoreCards() {
     this.scorecardservice.getScoreCard().subscribe({
       next: (data) => {
         this.topics = data.map((topic: any) => ({ name: topic.topicName, _id:topic._id}));
@@ -89,9 +83,9 @@ export class ScoreCardComponent implements OnInit,AfterViewInit {
       }
     });
   }
-
   //Flattening data for easy fetching
   processData(data: any[]): any[] {
+
     const traineeMap: any = {};
 
     data.forEach(topic => {
@@ -108,40 +102,47 @@ export class ScoreCardComponent implements OnInit,AfterViewInit {
       });
     });
 
+    //calculating overall percentage
     const trainees = Object.values(traineeMap);
     trainees.forEach((trainee: any) => {
       trainee.overallPercentage = parseFloat((trainee.overallPercentage / this.topics.length).toFixed(2));
     });
-
+    //calculating Rank
     trainees.sort((a: any, b: any) => b.overallScore - a.overallScore);
     trainees.forEach((trainee: any, index: number) => {
       trainee.rank = index + 1;
     });
 
     return trainees;
+
   }
 
+//deleting topic from Database
   delete(id:string){
-    // alert('deleted');
-    // if(alert('Are you sure want to delete this score card?')==){
-    this.scorecardservice.deleteScoreCard(id).subscribe(()=>{
-      console.log('deleted score-card successfully.');
+    this.scorecardservice.deleteScoreCard(id).subscribe({
+      next:(res)=>{
+        console.log('deleted score-card successfully.');
+         this.helper();
+        
+      },
+      error:(error)=>{
+        console.log(error);
+
+      }
+      
     });
-  // }
-    // alert('deleted');
   }
 
-  clickk(id:string ){
-    alert("hovered"+id);
+//helper function for delete
+  helper(){
+    this.loadScoreCards();
   }
 
-  //view topic dialog box
-  openDialog(id:string){
+   //view topic dialog box
+   openDialog(id:string){
     const dialogRef = this.dialog.open(ViewTopicComponent, {
       data: { id: id }
     });
-
-    // this.dialogRef
     dialogRef.afterClosed().subscribe(result=>{
       console.log(`Dialog Result: ${result}`);
     })
@@ -161,26 +162,25 @@ export class ScoreCardComponent implements OnInit,AfterViewInit {
   //create score card Dialog box
   createScoreCardDialog(){
     const dialogRef = this.dialog.open(CreateScoreCardComponent);
-    
     dialogRef.afterClosed().subscribe(result=>{
      if(result){
       this.loadScoreCards();
-      // this.router.navigate['/scorec'];
      }
     });
-
   }
 
   //AddColumn score card dialog box
   AddScoreCardDialog(){
     const dialogRef = this.dialog.open(AddColumnComponent);
-    
     dialogRef.afterClosed().subscribe(result=>{
       console.log(`Dialog Result: ${result}`);
+      if(result){
+        this.loadScoreCards();
+      }
     });
   }
 
-  editDialog(id:string){
+  editDialog(id:any){
   
      const dialogRef = this.dialog.open(CreateScoreCardComponent, {
       data: { id: id }
@@ -189,9 +189,9 @@ export class ScoreCardComponent implements OnInit,AfterViewInit {
     // this.dialogRef
     dialogRef.afterClosed().subscribe(result=>{
       console.log(`Dialog Result: ${result}`);
-      // if(result){
-      //   this.loadScoreCards();
-      // }
+      if(result){
+        this.loadScoreCards();
+      }
     })
 
   }
