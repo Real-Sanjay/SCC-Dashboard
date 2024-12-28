@@ -31,6 +31,7 @@ mat-card-header {
   gap: 16px;
 }
 
+
 .summary-card {
   display: flex;
   flex-direction: column;
@@ -42,41 +43,40 @@ mat-card-header {
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 16px;
+  box-sizing: border-box;
 }
 
 .summary-card h3 {
-  margin-top: 4px;
-  /* Added small space between icon and heading */
-  margin-bottom: 8px;
-  font-size: 1.7 rem;
+  margin: 2px 0; 
+  font-size: 1.4rem; 
   font-weight: bold;
   color: #3f51b5;
 }
 
 .summary-icon {
-  font-size: 1.5rem;
+  font-size: 1.4rem; 
   color: #3f51b5;
-  margin-bottom: 4px;
-  /* Reduced margin to create a small gap */
+  margin-bottom: 2px; 
 }
 
 .metric {
-  font-size: 1rem;
-  margin: 4px 0;
+  font-size: 0.9rem; 
+  margin: 2px 0; 
 }
 
 .metric-value {
-  font-size: 1.4rem;
-  /* Adjusted for better balance */
+  font-size: 1.2rem; 
   font-weight: bold;
   color: #333;
 }
 
+
+
+
 .charts-container {
+  /*Pie chart takes 1 part, Bar chart takes 2 parts*/
   display: grid;
-  /* Changed to grid layout */
-  grid-template-columns: 1fr 2fr;
-  /* Pie chart takes 1 part, Bar chart takes 2 parts */
+  grid-template-columns: 1fr 2fr; 
   gap: 24px;
 }
 
@@ -93,19 +93,15 @@ mat-card-header {
   justify-content: center;
   align-items: center;
   height: 300px;
-  /* Maintain height */
 }
 
 .bar-chart-container {
   width: 96%;
-  /* Utilize full available space */
   height: 300px;
-  /* Adjust the height of the bar chart */
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  /* Allow title to stack */
 }
 
 .chart h3 {
@@ -114,7 +110,6 @@ mat-card-header {
   margin-bottom: 16px;
   color: #333;
   word-wrap: break-word;
-  /* Ensure text breaks and doesn't overflow */
 }
 
 canvas {
