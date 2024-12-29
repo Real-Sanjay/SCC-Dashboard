@@ -20,7 +20,7 @@
   </ng-container>
 
   <ng-container class="column2" *ngFor="let topic of topics"  [matColumnDef]="topic.name + 'Score'">
-    <th mat-header-cell (click)="openDialog(topic._id)" *matHeaderCellDef><a>{{topic.name}} Score</a> </th>
+    <th mat-header-cell (click)="openDialog(topic._id)" *matHeaderCellDef><a>{{topic.name}}  Score</a> </th>
     <td mat-cell *matCellDef="let element"> {{element[topic.name + 'Score']}} </td>
   </ng-container>
 
