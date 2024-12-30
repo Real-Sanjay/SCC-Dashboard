@@ -11,6 +11,8 @@ import { AddColumnComponent } from '../add-column/add-column.component';
 import { Router } from '@angular/router';
 import { SnackBarService } from 'src/app/core/services/snackBar.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { PopUpService } from 'src/app/core/services/pop-up.service';
+
 @Component({
   selector: 'app-score-card',
   standalone: false,
@@ -37,6 +39,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 export class ScoreCardComponent implements OnInit,AfterViewInit {
 
   hover: boolean = false;
+  data:any[]=[];
   scorecard: any[] = [];
   topics: any[] = [];
   displayedColumns: string[] = ['traineeName', 'overallScore', 'overallPercentage', 'rank'];
@@ -47,7 +50,9 @@ export class ScoreCardComponent implements OnInit,AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private scorecardservice: ScoresService,private dialog:MatDialog,private router:Router) {
+  constructor(private scorecardservice: ScoresService,private dialog:MatDialog,private router:Router,
+    private popup:PopUpService,private snackBar:SnackBarService
+  ) {
 
     this.dataSource = new MatTableDataSource(this.scorecard);
     this.paginator = {} as MatPaginator;
@@ -77,12 +82,13 @@ export class ScoreCardComponent implements OnInit,AfterViewInit {
 
     //DataSource filtering
     this.dataSource.filterPredicate = (data: any, filter: string) => {
-      const dataStr = Object.keys(data).reduce((currentTerm: string, key: string) => {
-        return currentTerm + (data as { [key: string]: any })[key] + '◬';
-      }, '').toLowerCase();
+      // const dataStr = Object.keys(data).reduce((currentTerm: string, key: string) => {
+      //   return currentTerm + (data as { [key: string]: any })[key] + '◬';
+      // }, '').toLowerCase();
 
-      const transformedFilter = filter.trim().toLowerCase();
-      return dataStr.indexOf(transformedFilter) !== -1;
+      // const transformedFilter = filter.trim().toLowerCase();
+      // return dataStr.indexOf(transformedFilter) !== -1;
+      return data.traineeName.toLowerCase().includes(filter);
   }
 }
 
@@ -91,6 +97,7 @@ loadScoreCards() {
     this.scorecardservice.getScoreCard().subscribe({
       next: (data) => {
         this.topics = data.map((topic: any) => ({ name: topic.topicName, _id:topic._id}));
+        this.data=data;
         this.scorecard = this.processData(data);
         this.columnsToDisplay = ['traineeName', ...this.topics.flatMap(topic => 
           [topic.name + 'Score', topic.name + 'Percentage']), 'overallScore', 'overallPercentage', 'rank'];
@@ -140,24 +147,32 @@ loadScoreCards() {
 
 //deleting topic from Databasee
   delete(id:string){
-    this.scorecardservice.deleteScoreCard(id).subscribe({
-      next: (res) => {
-        console.log('deleted score-card successfully.');
-        // Removing the deleted item from the local data instead of calling api
-        this.topics = this.topics.filter(topic => topic._id !== id);
-        // Update the columns to display
-        this.columnsToDisplay = ['traineeName', ...this.topics.flatMap(topic => 
-          [topic.name + 'Score', topic.name + 'Percentage']), 'overallScore', 'overallPercentage', 'rank'];
-        // Update the datasource
-        this.dataSource.data = this.dataSource.data.filter((item: any) => 
-          !item._id || item._id !== id
-        );
-        // this.snackBar.openSnackBar('Score card deleted successfully', 'Success');
-      },
-      error:(error)=>{
-        console.log(error.url);
+    this.popup.confirm('Are you sure want to delete this item?')
+    .subscribe(result=>{
+      if(result){
+        // console.log('Item deleted');
+        this.scorecardservice.deleteScoreCard(id).subscribe({
+          next: (res) => {
+            console.log('deleted score-card successfully.');
 
-      } 
+            // Removing the deleted item from the local data instead of calling api
+            this.topics = this.topics.filter(topic => topic._id !== id);
+            // Update the columns to display
+            this.columnsToDisplay = ['traineeName', ...this.topics.flatMap(topic => 
+              [topic.name + 'Score', topic.name + 'Percentage']), 'overallScore', 'overallPercentage', 'rank'];
+            // Update the datasource
+            this.dataSource.data = this.dataSource.data.filter((item: any) => 
+              !item._id || item._id !== id
+            );
+            this.snackBar.openSnackBar('Score card deleted successfully', 'Success');
+
+          },
+          error:(error)=>{
+            console.log(error.url);
+    
+          } 
+        });
+      }
     });
   }
 
@@ -229,6 +244,17 @@ loadScoreCards() {
     })
 
   }
+
+  //pop-up for delete template
+  // popUp(){
+  //   this.popup.confirm('Are you sure want to delete this item?')
+  //   .subscribe(result=>{
+  //     if(result){
+  //       console.log('Item deleted');
+  //       if yes --write code here--
+  //     }
+  //   });
+  // }
 }
 
 
