@@ -9,14 +9,34 @@ import { ViewTraineeReportComponent } from '../view-trainee-report/view-trainee-
 import { CreateScoreCardComponent } from '../create-score-card/create-score-card.component';
 import { AddColumnComponent } from '../add-column/add-column.component';
 import { Router } from '@angular/router';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-score-card',
   standalone: false,
   templateUrl: './score-card.component.html',
   styleUrls: ['./score-card.component.scss'],
+  animations: [
+    trigger('fadeIn', [
+      state('void', style({ opacity: 0 })),
+      transition(':enter', [
+        animate('1s ease-in', style({ opacity: 1 }))
+      ])
+    ]),
+    trigger('hoverEffect', [
+      state('hover', style({ backgroundColor: '#f1f1f1' })),
+      transition('* => hover', [
+        animate('0.3s ease-in')
+      ]),
+      transition('hover => *', [
+        animate('0.3s ease-out')
+      ])
+    ])
+  ]
 })
 export class ScoreCardComponent implements OnInit,AfterViewInit {
+
+  hover: boolean = false; // Add this line
 
   scorecard: any[] = [];
   topics: any[] = [];
@@ -195,6 +215,8 @@ loadScoreCards() {
     })
 
   }
+
+  
 }
 
 

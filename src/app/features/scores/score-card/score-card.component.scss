@@ -63,6 +63,19 @@
     font-size: 15px;;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
+
+  .mat-elevation-z8{
+    th{
+      animation: slideIn 0.5s ease forwards;
+
+      @for $i from 1 through 5 {
+        &:nth-child(#{$i}) {
+          animation-delay: #{$i * 0.5}s;
+        }
+      }
+    }
+
+  }
   .Filter{
     // background-color: #0056b3;
     font-size: 20px;

@@ -9,14 +9,21 @@
   <div mat-table class="mat-elevation-z8">
   <table mat-table [dataSource]="dataSource" matSort >
 
-  <ng-container class="column1" matColumnDef="traineeName">
+  <!-- <ng-container class="column1" matColumnDef="traineeName">
     <th mat-header-cell  *matHeaderCellDef mat-sort-header> Trainee Name</th>
     <td mat-cell *matCellDef="let element" (click)="traineeReport(element.traineeName)"> <a style="hover{ color:blue;}">{{element.traineeName}}</a> </td>
+  </ng-container> -->
+
+  <ng-container matColumnDef="traineeName">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Trainee Name</th>
+    <td mat-cell *matCellDef="let element" [@fadeIn] (mouseover)="hover = true" (mouseleave)="hover = false" [@hoverEffect]="hover ? 'hover' : ''">
+      <a (click)="traineeReport(element.traineeName)">{{element.traineeName}}</a>
+    </td>
   </ng-container>
 
   <ng-container class="column2" *ngFor="let topic of topics"  [matColumnDef]="topic.name + 'Score'">
     <th mat-header-cell (click)="openDialog(topic._id)" *matHeaderCellDef><a>{{topic.name}} Score</a> </th>
-    <td mat-cell *matCellDef="let element"> {{element[topic.name + 'Score']}} </td>
+    <td mat-cell *matCellDef="let element"[@fadeIn] (mouseover)="hover = true" (mouseleave)="hover = false" [@hoverEffect]="hover ? 'hover' : ''" > {{element[topic.name + 'Score']}} </td>
   </ng-container>
 
   <ng-container class="column3" *ngFor="let topic of topics" [matColumnDef]="topic.name + 'Percentage'">
@@ -48,5 +55,12 @@
   <tr class="mat-row" *matNoDataRow>
     <td class="mat-cell" colspan="4">No data matching the filter</td>
   </tr>
+
+  <!-- <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnsToDisplay;" [@fadeIn]></tr>
+
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">No data matching the filter</td>
+    </tr> -->
 </table>
 </div>
