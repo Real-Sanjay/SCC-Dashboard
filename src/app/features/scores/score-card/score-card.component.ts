@@ -9,9 +9,8 @@ import { ViewTraineeReportComponent } from '../view-trainee-report/view-trainee-
 import { CreateScoreCardComponent } from '../create-score-card/create-score-card.component';
 import { AddColumnComponent } from '../add-column/add-column.component';
 import { Router } from '@angular/router';
-import { trigger, state, style, transition, animate } from '@angular/animations';
 import { SnackBarService } from 'src/app/core/services/snackBar.service';
-
+import { trigger, state, style, transition, animate } from '@angular/animations';
 @Component({
   selector: 'app-score-card',
   standalone: false,
@@ -37,8 +36,7 @@ import { SnackBarService } from 'src/app/core/services/snackBar.service';
 })
 export class ScoreCardComponent implements OnInit,AfterViewInit {
 
-  hover: boolean = false; // Add this line
-
+  hover: boolean = false;
   scorecard: any[] = [];
   topics: any[] = [];
   displayedColumns: string[] = ['traineeName', 'overallScore', 'overallPercentage', 'rank'];
@@ -204,7 +202,7 @@ loadScoreCards() {
 
   //AddColumn score card dialog box
   AddScoreCardDialog(){
-    const dialogRef = this.dialog.open(CreateScoreCardComponent);
+    const dialogRef = this.dialog.open(AddColumnComponent);
     dialogRef.afterClosed().subscribe(
       {
         next:(res)=>{
@@ -231,8 +229,6 @@ loadScoreCards() {
     })
 
   }
-
-  
 }
 
 

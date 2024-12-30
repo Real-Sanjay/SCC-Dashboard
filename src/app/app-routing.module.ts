@@ -22,7 +22,7 @@ const routes: Routes = [
   }, 
 
   //paths required for scores
-  {path:'scorec',component:ScoreCardComponent},
+  {path:'scores',component:ScoreCardComponent},
   {path:'create',component:CreateScoreCardComponent},
   {path:'Addcolumn',component:AddColumnComponent},
   {path:'edit/:id',component:CreateScoreCardComponent},

@@ -28,44 +28,44 @@
 
   <ng-container class="column2" *ngFor="let topic of topics"  [matColumnDef]="topic.name + 'Score'">
     <th mat-header-cell (click)="openDialog(topic._id)" *matHeaderCellDef><a>{{topic.name}} Score</a> </th>
-    <td mat-cell *matCellDef="let element"> {{element[topic.name + 'Score']}} </td>
+    <td mat-cell *matCellDef="let element" [@fadeIn] (mouseover)="hover = true" (mouseleave)="hover = false" [@hoverEffect]="hover ? 'hover' : ''"> {{element[topic.name + 'Score']}} </td>
   </ng-container>
 
   <ng-container class="column3" *ngFor="let topic of topics" [matColumnDef]="topic.name + 'Percentage'">
     <div class="Filterrr">
     <th mat-header-cell mat-sort-header *matHeaderCellDef>% <br><button><i  (click)="delete(topic._id)" class="fa-solid fa-trash">
     </i></button>  <i (click)="editDialog(topic._id)" class="fa-solid fa-pen-to-square"></i> </th>
-    <td mat-cell *matCellDef="let element"> {{element[topic.name + 'Percentage']}} </td>
+    <td mat-cell *matCellDef="let element" [@fadeIn] (mouseover)="hover = true" (mouseleave)="hover = false" [@hoverEffect]="hover ? 'hover' : ''"> {{element[topic.name + 'Percentage']}} </td>
     </div>
   </ng-container>
 
   <ng-container class="column4" matColumnDef="overallScore">
     <th mat-header-cell mat-sort-header *matHeaderCellDef> Overall <br> Score </th>
-    <td mat-cell *matCellDef="let element"> {{element.overallScore}}/{{element.totalscore}}</td>
+    <td mat-cell *matCellDef="let element" [@fadeIn] (mouseover)="hover = true" (mouseleave)="hover = false" [@hoverEffect]="hover ? 'hover' : ''"> {{element.overallScore}}/{{element.totalscore}}</td>
   </ng-container>
 
   <ng-container class="column5" matColumnDef="overallPercentage">
     <th mat-header-cell mat-sort-header *matHeaderCellDef> Overall <br> Percentage </th>
-    <td mat-cell *matCellDef="let element"> {{element.overallPercentage}} </td>
+    <td mat-cell *matCellDef="let element" [@fadeIn] (mouseover)="hover = true" (mouseleave)="hover = false" [@hoverEffect]="hover ? 'hover' : ''"> {{element.overallPercentage}} </td>
   </ng-container>
 
   <ng-container class="column6" matColumnDef="rank">
     <th mat-header-cell *matHeaderCellDef> Rank </th>
-    <td mat-cell *matCellDef="let element"> {{element.rank}} </td>
+    <td mat-cell *matCellDef="let element" [@fadeIn] (mouseover)="hover = true" (mouseleave)="hover = false" [@hoverEffect]="hover ? 'hover' : ''"> {{element.rank}} </td>
   </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+  <!-- <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
   <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
 
   <tr class="mat-row" *matNoDataRow>
     <td class="mat-cell" colspan="4">No data matching the filter</td>
-  </tr>
+  </tr> -->
 
-  <!-- <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
     <tr mat-row *matRowDef="let row; columns: columnsToDisplay;" [@fadeIn]></tr>
 
     <tr class="mat-row" *matNoDataRow>
       <td class="mat-cell" colspan="4">No data matching the filter</td>
-    </tr> -->
+    </tr>
 </table>
 </div>
