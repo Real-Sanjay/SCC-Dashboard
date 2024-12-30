@@ -24,7 +24,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
       ])
     ]),
     trigger('hoverEffect', [
-      state('hover', style({ backgroundColor: '#f1f1f1' })),
+      state('hover', style({ backgroundColor: '#c5c9dd' })),
       transition('* => hover', [
         animate('0.3s ease-in')
       ]),
