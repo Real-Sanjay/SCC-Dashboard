@@ -10,6 +10,7 @@ import { CreateScoreCardComponent } from '../create-score-card/create-score-card
 import { AddColumnComponent } from '../add-column/add-column.component';
 import { Router } from '@angular/router';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { SnackBarService } from 'src/app/core/services/snackBar.service';
 
 @Component({
   selector: 'app-score-card',
@@ -142,9 +143,18 @@ loadScoreCards() {
 //deleting topic from Databasee
   delete(id:string){
     this.scorecardservice.deleteScoreCard(id).subscribe({
-      next:(res)=>{
+      next: (res) => {
         console.log('deleted score-card successfully.');
-         this.helper();  
+        // Removing the deleted item from the local data instead of calling api
+        this.topics = this.topics.filter(topic => topic._id !== id);
+        // Update the columns to display
+        this.columnsToDisplay = ['traineeName', ...this.topics.flatMap(topic => 
+          [topic.name + 'Score', topic.name + 'Percentage']), 'overallScore', 'overallPercentage', 'rank'];
+        // Update the datasource
+        this.dataSource.data = this.dataSource.data.filter((item: any) => 
+          !item._id || item._id !== id
+        );
+        // this.snackBar.openSnackBar('Score card deleted successfully', 'Success');
       },
       error:(error)=>{
         console.log(error.url);
@@ -153,10 +163,6 @@ loadScoreCards() {
     });
   }
 
-//helper function for delete
-  helper(){
-    this.loadScoreCards();
-  }
 
    //view topic dialog box
    openDialog(id:string){
@@ -182,21 +188,31 @@ loadScoreCards() {
   //create score card Dialog box
   createScoreCardDialog(){
     const dialogRef = this.dialog.open(CreateScoreCardComponent);
-    dialogRef.afterClosed().subscribe(result=>{
-     if(result){
-      this.loadScoreCards();
-     }
+    dialogRef.afterClosed().subscribe({
+      next:(res)=>{
+        if(res){
+          console.log("inside ref")
+          this.loadScoreCards();
+          console.log("Loaded score cards")
+        }
+        },
+      error:(error)=>{
+        console.log("error showing data", error);
+      }
     });
   }
 
   //AddColumn score card dialog box
   AddScoreCardDialog(){
-    const dialogRef = this.dialog.open(AddColumnComponent);
-    dialogRef.afterClosed().subscribe(result=>{
-      console.log(`Dialog Result: ${result}`);
-      if(result){
-        this.loadScoreCards();
-      }
+    const dialogRef = this.dialog.open(CreateScoreCardComponent);
+    dialogRef.afterClosed().subscribe(
+      {
+        next:(res)=>{
+          if(res){
+            this.loadScoreCards();
+            console.log("Loaded score card")
+          }
+        }
     });
   }
 

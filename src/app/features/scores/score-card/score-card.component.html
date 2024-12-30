@@ -5,7 +5,12 @@
   <button mat-raised-button (click)="AddScoreCardDialog()" >+ Add Column</button><br>
   <button mat-raised-button (click)="createScoreCardDialog()">Create</button>
 </div>
+
   
+  <!-- <mat-form-field> -->
+    <!-- <mat-label>Filter</mat-label>
+     <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>  -->
+   <!-- </mat-form-field>  -->
   <div mat-table class="mat-elevation-z8">
   <table mat-table [dataSource]="dataSource" matSort >
 
@@ -23,7 +28,7 @@
 
   <ng-container class="column2" *ngFor="let topic of topics"  [matColumnDef]="topic.name + 'Score'">
     <th mat-header-cell (click)="openDialog(topic._id)" *matHeaderCellDef><a>{{topic.name}} Score</a> </th>
-    <td mat-cell *matCellDef="let element"[@fadeIn] (mouseover)="hover = true" (mouseleave)="hover = false" [@hoverEffect]="hover ? 'hover' : ''" > {{element[topic.name + 'Score']}} </td>
+    <td mat-cell *matCellDef="let element"> {{element[topic.name + 'Score']}} </td>
   </ng-container>
 
   <ng-container class="column3" *ngFor="let topic of topics" [matColumnDef]="topic.name + 'Percentage'">
