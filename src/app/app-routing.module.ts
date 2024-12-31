@@ -7,13 +7,15 @@ import { TrainersListComponent } from './features/trainers/trainers-list/trainer
 import { ProgramsAddEditComponent } from './features/programs/progarms-list/programs-add-edit/programs-add-edit.component';
 import { TraineesAddEditComponent } from './features/trainees/trainees-list/trainees-add-edit/trainees-add-edit.component';
 import { TrainersAddEditComponent } from './features/trainers/trainers-list/trainers-add-edit/trainers-add-edit.component';
+import { DashboardComponent } from './features/dashboard/dashboard.component';
 
 const routes: Routes = [
   {path: '', component:HeaderComponent,
 
     children: [
       {path:'program-list', component:ProgarmsListComponent},
-      {path:'trainers-list', component:TrainersListComponent}
+      {path:'trainers-list', component:TrainersListComponent},
+      {path:'dashboard', component:DashboardComponent},
     
     ]
   }, 

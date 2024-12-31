@@ -15,7 +15,7 @@ import { TraineesListComponent } from './features/trainees/trainees-list/trainee
 import { TraineesAddEditComponent } from './features/trainees/trainees-list/trainees-add-edit/trainees-add-edit.component';
 import { ScoresComponent } from './features/scores/scores.component';
 import { ProgramsModule } from './features/programs/programs.module';
-
+import { MatCardModule } from '@angular/material/card';
 
 //creating a constant array of all the modules
 const uxModules = [
@@ -44,6 +44,7 @@ const uxModules = [
     BrowserAnimationsModule,
     AppRoutingModule, 
     ProgramsModule,
+    MatCardModule,
     uxModules
   ],
   providers: [],
