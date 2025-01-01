@@ -6,6 +6,8 @@ import { Program } from 'src/app/core/interfaces/programs.interface';
 import { SnackBarService } from 'src/app/core/services/snackBar.service';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { FormControl } from '@angular/forms';
+import { PopUpService } from 'src/app/core/services/pop-up-service';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 
 
@@ -26,7 +28,9 @@ export class ProgarmsListComponent implements OnInit{
 
  
 
-  constructor( private programService: ProgramService, private dialog:MatDialog, private snackBar: SnackBarService) {
+  constructor( private programService: ProgramService, private dialog:MatDialog, private snackBar: SnackBarService,
+    private popUpService: PopUpService
+  ) {
 
   }
 
@@ -120,16 +124,27 @@ export class ProgarmsListComponent implements OnInit{
  
   // Event handler for delete button
   deleteProgram(id: string): void {
-    console.log('Delete program clicked for ID:', id);
-    this.programService.deleteProgram(id).subscribe({
-      next:(response)=>{
-        console.log('Program deleted:', response);
-        this.snackBar.openSnackBar('Program deleted', 'Success');
-        this.fetchProgramDetails();
-      }
-    })
-    
+    this.popUpService.confirm('Are you sure you want to delete this program?').subscribe(result=>{
+      if(result){
+        console.log('Delete program clicked for ID:', id);
+        this.programService.deleteProgram(id).subscribe({
+          next:(response)=>{
+            console.log('Program deleted:', response);
+            this.snackBar.openSnackBar('Program deleted', 'Success');
+            this.fetchProgramDetails();
+          },
+          error:(err)=>{
+            console.error('Error deleting program:', err);
+            this.snackBar.openSnackBar('Error deleting program', 'Error');
+        }
+      
+    });
   }
+});
+}
+
+
+  
   editPorgram(id:string, program: Program):void{
     console.log('Edit program clicked for:', program);
 

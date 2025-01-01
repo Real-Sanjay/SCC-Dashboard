@@ -6,6 +6,7 @@ import { SnackBarService } from 'src/app/core/services/snackBar.service';
 import { TrainerService } from 'src/app/core/services/trainers.service';
 import { FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
+import { PopUpService } from 'src/app/core/services/pop-up-service';
 
 
 
@@ -20,7 +21,9 @@ export class TrainersListComponent implements OnInit {
   filteredTrainers: Trainer[] = [];
   searchControl = new FormControl('');
 
-  constructor(private trainerService: TrainerService, private dialog: MatDialog, private snackBar: SnackBarService) {}
+  constructor(private trainerService: TrainerService, private dialog: MatDialog, private snackBar: SnackBarService,
+     private popUpService: PopUpService
+  ) {}
 
   ngOnInit(): void {
     this.getTrainers();
@@ -111,18 +114,23 @@ getTrainers(): void {
            });
       }
 
-  deleteProgram(id: string): void {
+  deleteProgram(id: string): void  {
+    this.popUpService.confirm('Are you sure, you want to remove this trainer?').subscribe(result=>{
+      if(result){
+        this.trainerService.deleteTrainer(id).subscribe({
+          next:(res)=>{
+            console.log("Trainer deleted successfully!");
+            this.snackBar.openSnackBar("Trainer deleted", 'Success');
+            this.getTrainers();
+          },
+          error(err) {
+              console.log(err);
+          },
+        });
+      }
+    })
     // Logic to delete a program
-    this.trainerService.deleteTrainer(id).subscribe({
-      next:(res)=>{
-        console.log("Trainer deleted successfully!");
-        this.snackBar.openSnackBar("Trainer deleted", 'Success');
-        this.getTrainers();
-      },
-      error(err) {
-          console.log(err);
-      },
-    });
+   
   }
 
 }
