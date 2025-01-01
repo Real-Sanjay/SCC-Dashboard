@@ -1,0 +1,44 @@
+.heading{
+    text-align: center;
+    margin-top: 0px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  }
+  .form{
+    width:700px;
+    margin-top: 0px;
+  }
+  
+  .content {
+    padding-top: 8px;
+  }
+  
+  .row {
+    display: flex;
+    gap: 10px;
+  
+    mat-form-field {
+        width: 100%;
+    }}
+  
+  .example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  .example-full-width {
+    width: 100%;
+  }
+  
+  .names{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  action{
+    padding: 0px 25px 20px;
+    button{
+        flex:1;
+    }
+  }

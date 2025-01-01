@@ -1,0 +1,27 @@
+<div class="scorecard-container">
+    <h2><b>{{ scorecard.topicName }} Scorecard:</b></h2>
+    <h3><b>Total Marks:</b> {{scorecard.totalMarks}}</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Trainee Name</th>
+          <th>Assessment Score</th>
+          <th>Percentage</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let trainee of scorecard.SCCTrainee">
+          <td>{{ trainee.traineeName }}</td>
+          <td>{{ trainee.assessmentScore }}</td>
+          <td>{{ trainee.percentage }}%</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="average-percentage">
+      <strong>Average Percentage: </strong>{{ averagePercentage }}%
+    </div>
+    <button mat-button class="ok-button" (click)="closeDialog()">OK</button>
+  </div>
+  
+  
+  

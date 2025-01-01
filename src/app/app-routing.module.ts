@@ -8,6 +8,7 @@ import { ProgramsAddEditComponent } from './features/programs/progarms-list/prog
 import { TraineesAddEditComponent } from './features/trainees/trainees-list/trainees-add-edit/trainees-add-edit.component';
 import { TrainersAddEditComponent } from './features/trainers/trainers-list/trainers-add-edit/trainers-add-edit.component';
 import { DashboardComponent } from './features/dashboard/dashboard.component';
+import { ScoreCardComponent } from './features/scores/score-card/score-card.component';
 
 const routes: Routes = [
   {path: '', component:HeaderComponent,
@@ -16,6 +17,7 @@ const routes: Routes = [
       {path:'program-list', component:ProgarmsListComponent},
       {path:'trainers-list', component:TrainersListComponent},
       {path:'dashboard', component:DashboardComponent},
+      {path:'scores', component:ScoreCardComponent},
     
     ]
   }, 

@@ -1,0 +1,211 @@
+.create {
+    display:flex;
+    justify-content: right;
+    align-items: center;
+    width: 100%;
+    white-space-collapse:100%;
+    padding: 10px;
+    left:0px;
+    right: 0px;
+    background-color: #f0f0f0; /* Light grey background */
+    border: 1px solid #ccc; /* Light grey border */
+    border-radius: 5px; /* Rounded corners */
+    position: relative;
+  }
+
+  .create h1 {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    columns: rgb(8, 8, 66);
+    position: absolute;
+    left: 10px; /* Adjust as needed */
+    top: 10px; /* Adjust as needed */
+    margin: 0;
+  }
+
+  .create input{
+    margin-left: 8px;
+    margin-right: 10px;
+    align-items: center;
+    border-radius: 5px;
+    padding:7px 8px;
+    width: 400px;
+    padding-left: 10px;
+    background-color: white;
+  }
+  
+  .create button {
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: #2b537e; /* Blue background for the button */
+    color: white; /* White text color */
+    padding: 0px 20px; /* Padding inside the button */
+    border:#0056b3; /* Remove default border */
+    border-radius: 10px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+  }
+  
+  .create button:hover {
+    background-color: rgb(19, 19, 134); /* Darker blue on hover */
+  }
+  table {
+    max-width: 100%;
+    margin:  100px auto;
+    margin-top: 10px;
+    margin-left: 0px;
+    padding: 20px;
+    background-color:whitesmoke;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    color: black;
+    justify-content: center;
+    font-weight: normal;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .mat-elevation-z8{
+    th{
+      animation: slideIn 0.5s ease forwards;
+
+      @for $i from 1 through 5 {
+        &:nth-child(#{$i}) {
+          animation-delay: #{$i * 0.5}s;
+        }
+      }
+    }
+
+  }
+  .Filter{
+    // background-color: #0056b3;
+    font-size: 20px;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
+  }
+
+  .Filterrr button{
+    margin-left: 10px;
+  }
+
+  table th{
+    font-size: 14px;
+    background-color:#7986cb;
+    color: white;
+    margin-left: 100px;
+    // align-items:flex-start;
+    // width: 1000px;
+    padding-left: 20px;
+    text-align: left;
+  }
+
+  table td{
+    color: #000;
+    text-align:left;
+    padding-left: 25px;
+    font-size: 15px;
+    // justify-content: center;
+  }
+
+  table td a:hover{
+    color: blue;
+    text-decoration: underline;
+    // padding-left: 10px;
+    cursor: pointer;
+  }
+  
+  table th a:hover{
+    color: rgb(9, 9, 14);
+    cursor: pointer;
+  }
+  
+
+  .column1{
+    background-color: blue;
+  }
+  // .column1 th{
+  //   color: white;
+  // }
+
+  // CSS for Table
+
+  .create {
+    margin-bottom: 20px;
+  }
+  
+  .left-align {
+    text-align: left;
+  }
+  
+  .column1 th, .column1 td {
+    background-color: #c5c9dd; /* Light blue */
+    color: #000; /* Black */
+  }
+  
+  .column2 th, .column2 td {
+    background-color: #e6ffe6; /* Light green */
+    color: #000; /* Black */
+  }
+  
+  .column3 th, .column3 td {
+    background-color: #fff0f5; /* Light pink */
+    color: #000; /* Black */
+  }
+  
+  .column4 th, .column4 td {
+    background-color: #ffffe0; /* Light yellow */
+    color: #000; /* Black */
+  }
+  
+  .column5 th, .column5 td {
+    background-color: #f5f5dc; /* Beige */
+    color: #000; /* Black */
+  }
+  
+  .column6 th, .column6 td {
+    background-color: #dcdcdc; /* Light gray */
+    color: #000; /* Black */
+  }
+  
+  button {
+    justify-items:flex-end;
+    margin-left: 8px;
+    margin-right: 10px;
+  }
+
+  .column3 button{
+    margin-right: 5px;
+  }
+  
+
+  .mat-mdc-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+
+    table  th{
+    color:rgb(10, 10, 10);
+
+  }
+
+  table th:hover{
+    transform:scale(1.05);
+    cursor: pointer;
+    border-radius: 5px;
+  }
+
+  table th{
+    transition:transform .2s;
+  }
+
+  .create button:hover {
+    transform:scale(1.05);
+    cursor: pointer;
+  }
+
+
+
+  
+  
+  
+
+  
