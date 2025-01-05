@@ -1,8 +1,8 @@
-import { Component, OnInit,AfterViewInit,ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { ScoresService } from 'src/app/core/services/scores.service';
-import { MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
-import { MatSort, MatSortModule} from '@angular/material/sort';
-import { MatTableDataSource, MatTableModule} from '@angular/material/table';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { ViewTopicComponent } from '../view-topic/view-topic.component';
 import { ViewTraineeReportComponent } from '../view-trainee-report/view-trainee-report.component';
@@ -36,33 +36,28 @@ import { PopUpService } from 'src/app/core/services/pop-up-service';
     ])
   ]
 })
-export class ScoreCardComponent implements OnInit,AfterViewInit {
+export class ScoreCardComponent implements OnInit, AfterViewInit {
 
   hover: boolean = false;
-  data:any[]=[];
+  data: any[] = [];
   scorecard: any[] = [];
   topics: any[] = [];
   displayedColumns: string[] = ['traineeName', 'overallScore', 'overallPercentage', 'rank'];
   columnsToDisplay: string[] = this.displayedColumns.slice();
   dataSource: MatTableDataSource<any>;
 
-  //for sorting and pagination
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  //for sorting
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private scorecardservice: ScoresService,private dialog:MatDialog,private router:Router,
-    private popup:PopUpService,private snackBar:SnackBarService
+  constructor(private scorecardservice: ScoresService, private dialog: MatDialog, private router: Router,
+    private popup: PopUpService, private snackBar: SnackBarService
   ) {
-
     this.dataSource = new MatTableDataSource(this.scorecard);
-    this.paginator = {} as MatPaginator;
     this.sort = {} as MatSort;
-
   }
 
   // life-cycle hook
   ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
 
@@ -70,28 +65,19 @@ export class ScoreCardComponent implements OnInit,AfterViewInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
   }
 
   // life-cycle hook
   ngOnInit(): void {
     this.loadScoreCards();
-
-    //DataSource filtering
-    this.dataSource.filterPredicate = (data: any, filter: string) => {
-      return data.traineeName.toLowerCase().includes(filter);
   }
-}
 
-//loading score cards
-loadScoreCards() {
+  //loading score cards
+  loadScoreCards() {
     this.scorecardservice.getScoreCard().subscribe({
       next: (data) => {
-        this.topics = data.map((topic: any) => ({ name: topic.topicName, _id:topic._id}));
-        this.data=data;
+        this.topics = data.map((topic: any) => ({ name: topic.topicName, _id: topic._id }));
+        this.data = data;
         this.scorecard = this.processData(data);
         this.columnsToDisplay = ['traineeName', ...this.topics.flatMap(topic =>
           [topic.name + 'Score', topic.name + 'Percentage']), 'overallScore', 'overallPercentage', 'rank'];
@@ -113,9 +99,9 @@ loadScoreCards() {
       topic.SCCTrainee.forEach((trainee: any) => {
         if (!traineeMap[trainee.traineeName]) {
           traineeMap[trainee.traineeName] =
-          { traineeName: trainee.traineeName, overallScore: 0, overallPercentage: 0, rank: 0, totalscore:0};
+            { traineeName: trainee.traineeName, overallScore: 0, overallPercentage: 0, rank: 0, totalscore: 0 };
         }
-        traineeMap[trainee.traineeName].totalscore+=topic.totalMarks;
+        traineeMap[trainee.traineeName].totalscore += topic.totalMarks;
         traineeMap[trainee.traineeName]['_id'] = topic._id;
         traineeMap[trainee.traineeName][topic.topicName + 'Score'] = trainee.assessmentScore;
         traineeMap[trainee.traineeName][topic.topicName + 'Percentage'] = trainee.percentage.toFixed(2);
@@ -139,100 +125,99 @@ loadScoreCards() {
 
   }
 
-//deleting topic from Databasee
-  delete(id:string){
+  //deleting topic from Databasee
+  delete(id: string) {
     this.popup.confirm('Are you sure want to delete this item?')
-    .subscribe(result=>{
-      if(result){
-        // console.log('Item deleted');
-        this.scorecardservice.deleteScoreCard(id).subscribe({
-          next: (res) => {
-            console.log('deleted score-card successfully.');
+      .subscribe(result => {
+        if (result) {
+          // console.log('Item deleted');
+          this.scorecardservice.deleteScoreCard(id).subscribe({
+            next: (res) => {
+              console.log('deleted score-card successfully.');
+              // Removing the deleted item from the local data instead of calling api
+              this.topics = this.topics.filter(topic => topic._id !== id);
+              // Update the columns to display
+              this.columnsToDisplay = ['traineeName', ...this.topics.flatMap(topic =>
+                [topic.name + 'Score', topic.name + 'Percentage']), 'overallScore', 'overallPercentage', 'rank'];
+              // Update the datasource
+              this.dataSource.data = this.dataSource.data.filter((item: any) =>
+                !item._id || item._id !== id
+              );
+              this.snackBar.openSnackBar('Score card deleted successfully', 'Success');
 
-            // Removing the deleted item from the local data instead of calling api
-            this.topics = this.topics.filter(topic => topic._id !== id);
-            // Update the columns to display
-            this.columnsToDisplay = ['traineeName', ...this.topics.flatMap(topic =>
-              [topic.name + 'Score', topic.name + 'Percentage']), 'overallScore', 'overallPercentage', 'rank'];
-            // Update the datasource
-            this.dataSource.data = this.dataSource.data.filter((item: any) =>
-              !item._id || item._id !== id
-            );
-            this.snackBar.openSnackBar('Score card deleted successfully', 'Success');
+            },
+            error: (error) => {
+              console.log(error.url);
 
-          },
-          error:(error)=>{
-            console.log(error.url);
-
-          }
-        });
-      }
-    });
+            }
+          });
+        }
+      });
   }
 
 
-   //view topic dialog box
-   openDialog(id:string){
+  //view topic dialog box
+  openDialog(id: string) {
     const dialogRef = this.dialog.open(ViewTopicComponent, {
       data: { id: id }
     });
-    dialogRef.afterClosed().subscribe(result=>{
+    dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog Result: ${result}`);
     })
   }
 
   //trainee_report dialog box
-  traineeReport(name:string){
+  traineeReport(name: string) {
     const dialogRef = this.dialog.open(ViewTraineeReportComponent, {
-      data: { name:name }
+      data: { name: name }
     });
 
-    dialogRef.afterClosed().subscribe(result=>{
+    dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog Result: ${result}`);
     });
   }
 
   //create score card Dialog box
-  createScoreCardDialog(){
+  createScoreCardDialog() {
     const dialogRef = this.dialog.open(CreateScoreCardComponent);
     dialogRef.afterClosed().subscribe({
-      next:(res)=>{
-        if(res){
+      next: (res) => {
+        if (res) {
           console.log("inside ref")
           this.loadScoreCards();
           console.log("Loaded score cards")
         }
-        },
-      error:(error)=>{
+      },
+      error: (error) => {
         console.log("error showing data", error);
       }
     });
   }
 
   //AddColumn score card dialog box
-  AddScoreCardDialog(){
+  AddScoreCardDialog() {
     const dialogRef = this.dialog.open(AddColumnComponent);
     dialogRef.afterClosed().subscribe(
       {
-        next:(res)=>{
-          if(res){
+        next: (res) => {
+          if (res) {
             this.loadScoreCards();
             console.log("Loaded score card")
           }
         }
-    });
+      });
   }
 
-  editDialog(id:any){
-
-     const dialogRef = this.dialog.open(CreateScoreCardComponent, {
+  //edit dialog box
+  editDialog(id: any) {
+    const dialogRef = this.dialog.open(CreateScoreCardComponent, {
       data: { id: id }
     });
 
     // this.dialogRef
-    dialogRef.afterClosed().subscribe(result=>{
+    dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog Result: ${result}`);
-      if(result){
+      if (result) {
         this.loadScoreCards();
       }
     })

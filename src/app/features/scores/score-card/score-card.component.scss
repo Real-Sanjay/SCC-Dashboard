@@ -161,8 +161,9 @@ $header-bg-color: #3f51b5;
     }
     table {
       td {
-        a{
+        a:hover{
           cursor: pointer;
+          color:blue;
         }
         padding: 8px;
         font-size: 13px;

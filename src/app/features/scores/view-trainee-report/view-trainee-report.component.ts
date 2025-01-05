@@ -24,7 +24,6 @@ export class ViewTraineeReportComponent implements OnInit{
       private dialogRef: MatDialogRef<ViewTraineeReportComponent>
     ) {
       if (data) {
-        // console.log('Received name:', data.name);
         this.scorecardservice.getScoreCard().subscribe(card=>{
           this.topics = card.map((topic: any) => ({ names: topic.topicName, _id:topic._id}));
           this.scorecard=this.processData(card,data.name);

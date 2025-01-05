@@ -30,7 +30,25 @@ export class AddColumnComponent implements OnInit {
     });
     this.loadScoreCards();
   }
-  //to fetch details in form
+
+  createTrainee(traineeName: string): FormGroup {
+    return this.fb.group({
+      traineeName: [traineeName, Validators.required],
+      assessmentScore: [0, [Validators.required, Validators.min(0)]],
+      percentage: [0, [Validators.required, Validators.min(0), Validators.max(100)]]
+    });
+  }
+
+  //To add new Trainee when clicked on Add Trainee Button
+  addTrainee(): void {
+    this.SCCTrainee.push(this.createTrainee(''));
+  }
+  //To remove Trainee when clicked on Remove Trainee Button
+  removeTrainee(index: number): void {
+    this.SCCTrainee.removeAt(index);
+  }
+
+  //It loads scores data from Database(stroed in MongoDB) and populate trainee names inside form 
   loadScoreCards() {
     this.scorecardservice.getScoreCard().subscribe({
       next: (data) => {
@@ -44,18 +62,11 @@ export class AddColumnComponent implements OnInit {
     });
   }
 
-  createTrainee(traineeName: string): FormGroup {
-    return this.fb.group({
-      traineeName: [traineeName, Validators.required],
-      assessmentScore: [0, [Validators.required, Validators.min(0)]],
-      percentage: [0, [Validators.required, Validators.min(0), Validators.max(100)]]
-    });
-  }
-
   get SCCTrainee(): FormArray {
     return this.AddColumnForm.get('SCCTrainee') as FormArray;
   }
 
+    //to fetch Trainee Name details in Add Column Form
   populateForm() {
     this.SCCTrainee.clear();
     if (this.scorecard.length > 0) {
@@ -65,14 +76,7 @@ export class AddColumnComponent implements OnInit {
     }
   }
 
-  addTrainee(): void {
-    this.SCCTrainee.push(this.createTrainee(''));
-  }
-
-  removeTrainee(index: number): void {
-    this.SCCTrainee.removeAt(index);
-  }
-
+  // Automatic calculation of percentage when value is entered in Assessment score
   calculatePercentage(index: number): void {
     const totalMarks = this.AddColumnForm.get('totalMarks')?.value;
     const assessmentScore = this.SCCTrainee.at(index).get('assessmentScore')?.value;
@@ -83,12 +87,14 @@ export class AddColumnComponent implements OnInit {
   onSubmit(): void {
     console.log(this.AddColumnForm.value);
     // Handle form submission logic here
+    //optional
   }
 
-
+  // On clicking save button, it saves new topic with trainee scores in database.
   savePost() {
     let flag: boolean=false;
       if (this.AddColumnForm.valid) {
+        //Logic for checking topic name exists or not
         this.scorecardservice.getScoreCard().subscribe({
           next:(data)=>{
             data.forEach((topic:any)=>{
@@ -98,7 +104,7 @@ export class AddColumnComponent implements OnInit {
               }
             });
             if(flag){
-              this.snackBar.openSnackBar('Score card already exists', 'failed');
+              this.snackBar.openSnackBar('Topic already exists', 'failed');
               this.dialog.close(true);
               this.loadScoreCards();
             }else{

@@ -32,8 +32,8 @@ export class CreateScoreCardComponent implements OnInit{
       SCCTrainee: this.fb.array([this.createTrainee()],Validators.required)
     });
 
-    //getting id from parent compoennent Scorecard component
-
+    //getting id from parent compoenent Scorecard component
+    //For editing purpose
     if (this.data.id) {
       this.scorecardservice.getScoreCardById(this.data.id).subscribe(card => {
         if (card) {
@@ -83,9 +83,9 @@ export class CreateScoreCardComponent implements OnInit{
     this.SCCTrainee.removeAt(index);
   }
 
-  //Dynamically calculating the percentage based on total marks and Assessment score.
+  //Automatical calculating the percentage based on total marks and Assessment score.
   calculatePercentage(index: number): void {
-    const totalMarks = this.scoreCardForm.get('totalMarks')?.value;
+    const totalMarks = this.scoreCardForm.get('totalMarks')?.value; //?. ->optional chaining operator(not throw error)
     const assessmentScore = this.SCCTrainee.at(index).get('assessmentScore')?.value;
     const percentage = totalMarks ? (assessmentScore / totalMarks) * 100 : 0;
     this.SCCTrainee.at(index).get('percentage')?.setValue(percentage.toFixed(2));
@@ -94,11 +94,12 @@ export class CreateScoreCardComponent implements OnInit{
     this.SCCTrainee.controls.forEach((_, index) => this.calculatePercentage(index));
   }
 
+   //It loads scores data from Database(stroed in MongoDB)
   savePost(): void {
 
     let flag: boolean=false;
     if (this.scoreCardForm.valid) {
-
+      //update(edit functionality)
       if (this.data && this.data.id) {
               this.scorecardservice.updateScoreCard(this.data.id, this.scoreCardForm.value).subscribe(() => {
                 console.log('Score card updated Successfully');
@@ -110,6 +111,7 @@ export class CreateScoreCardComponent implements OnInit{
               });
             }
       else{
+        //logic for checking topic name exists or not
         this.scorecardservice.getScoreCard().subscribe({
           next:(data)=>{
             data.forEach((topic:any)=>{

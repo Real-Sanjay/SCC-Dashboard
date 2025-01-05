@@ -1,4 +1,5 @@
 <div class="navbar">
+    <!-- user profile -->
   <div class="user">
       <img src="https://freesvg.org/img/abstract-user-flat-4.png" alt="Admin Profile" />
       <div class="user-details">
@@ -7,7 +8,7 @@
       </div>
   </div>
 
-
+  <!-- Menu->Navigation Links for different sections of applications) -->
   <div class="menu"  >
       <button mat-button class="menu-button" [routerLink]="['/dashboard']" routerLinkActive="active-link">
           <mat-icon>dashboard</mat-icon>
@@ -17,10 +18,6 @@
           <mat-icon>calendar_today</mat-icon>
           <span>Modules</span>
       </button>
-      <!-- <button mat-button class="menu-button" [routerLink]="['/module-list']" routerLinkActive="active-link">
-        <mat-icon>calendar_today</mat-icon>
-        <span>Create Module</span>
-    </button> -->
       <button mat-button class="menu-button" [routerLink]="['/trainees-list']"  routerLinkActive="active-link">
           <mat-icon>people</mat-icon>
           <span>Trainees</span>
@@ -34,8 +31,8 @@
           <span>Scores</span>
       </button>
   </div>
+  <!-- Logout  -->
   <div class="logout">
-
       <button mat-button class="logout-button" (click)=logout()>
           <mat-icon >logout</mat-icon>
           <span>Logout</span>
