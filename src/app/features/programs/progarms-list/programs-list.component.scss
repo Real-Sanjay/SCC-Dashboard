@@ -1,18 +1,18 @@
 .addModule{
   padding-right:10px;
   margin-right:10px;
-
+ 
 }
-
-
+ 
+ 
 // program-list.component.scss
 .page-container {
   min-height: 100vh;
   background-color: #44a5ff;
 }
-
+ 
 .sticky-header {
-
+ 
     margin-left: 10px;
     margin-right:50px;
     // margin-right: -600px;
@@ -22,7 +22,7 @@
     background-color: white;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
-
+ 
 .search-container {
   display: flex;
   justify-content: center;
@@ -32,10 +32,10 @@
   border-radius: 8px;
   // box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   max-width: 700px;
-
+ 
   margin-right: 19px;
 }
-
+ 
 .search-field {
   display: flex;
   align-items: center;
@@ -46,12 +46,12 @@
   overflow: hidden;
   padding: 0 8px;
 }
-
+ 
 .search-field mat-icon {
   color: #888;
   margin-right: 4px;
 }
-
+ 
 .search-field input {
   flex: 1;
   border: none;
@@ -59,7 +59,7 @@
   font-size: 16px;
   padding: 10px;
 }
-
+ 
 .search-field button {
   border: none;
   background: none;
@@ -70,28 +70,28 @@
   justify-content: center;
   height: 100%;
 }
-
+ 
 .search-field button:hover {
   color: #333;
 }
-
+ 
 .search-field input::placeholder {
   color: #bbb;
   font-style: italic;
 }
-
-
-
-
+ 
+ 
+ 
+ 
 .example-spacer {
   flex: 1 1 auto;
 }
-
+ 
 .programs-container {
   padding: 20px;
   height: calc(100vh - 84px);
   overflow-y: auto;
-
+ 
   @media (max-width: 640px) {
     padding: 12px;
   }
@@ -99,55 +99,55 @@
 .programs-container::-webkit-scrollbar{
   width: 0px;
 }
-
+ 
 .program-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 24px;
   max-width: 1600px;
   margin: 0 auto;
-
+ 
   @media (max-width: 640px) {
     grid-template-columns: 1fr;
     gap: 16px;
   }
 }
-
+ 
 .program-card {
   height: 500px;
   display: flex;
   flex-direction: column;
   transition: all 0.3s ease;
   cursor: pointer;
-
+ 
   &:hover {
     transform: translateY(-4px);
     box-shadow: 0 8px 16px rgba(0,0,0,0.1);
   }
-
+ 
   &.expanded {
     transform: scale(1.02);
     z-index: 1;
   }
-
+ 
   @media (max-width: 640px) {
     height: auto;
     min-height: 400px;
   }
-
+ 
   mat-card-header {
     padding: 16px;
     position: relative;
     background-color: rgba(0,0,0,0.02);
     border-bottom: 1px solid rgba(0,0,0,0.1);
-
+ 
     mat-card-title {
       font-size: clamp(1.2rem, 2.5vw, 1.5rem);
       font-weight: 500;
       margin-right: 80px;
     }
   }
-
+ 
   .status-badge {
     position: absolute;
     right: 16px;
@@ -158,99 +158,106 @@
     font-size: 0.875rem;
     font-weight: 500;
     transition: all 0.3s ease;
-
+ 
     &.scheduled {
       background-color: #fff3cd;
       color: #856404;
-
+ 
       &:hover {
         background-color: #ffecb5;
       }
     }
-
+ 
     &.cancelled{
-      background-color: #ee0000;
-      color: #ffffff;
-
+      background-color: #f8d7da;  // Light red
+      color: #721c24; // Dark red
+ 
       &:hover {
         background-color: #fc3200;
       }
     }
-
+ 
     &.completed {
       background-color: #d4edda;
       color: #155724;
-
+ 
       &:hover {
         background-color: #c3e6cb;
       }
     }
+    &.ongoing{
+      background-color: rgb(236, 236, 134);
+      color: rgb(39, 37, 37);
+    }
+    &:hover {
+      background-color: #b5c2b8;
+    }
   }
 }
-
+ 
 .program-content {
   flex: 1;
   overflow: hidden;
   padding: 0 !important;
 }
-
+ 
 .trainers-container {
   height: 100%;
   overflow-y: auto;
   padding: 16px;
   scrollbar-width: thin;
   scrollbar-color: #888 #f1f1f1;
-
+ 
   &::-webkit-scrollbar {
     width: 6px;
   }
-
+ 
   &::-webkit-scrollbar-track {
     background: #f1f1f1;
   }
-
+ 
   &::-webkit-scrollbar-thumb {
     background: #888;
     border-radius: 3px;
   }
 }
-
+ 
 .trainer-section {
   margin-bottom: 24px;
   opacity: 0;
   animation: fadeIn 0.5s ease forwards;
-
+ 
   @for $i from 1 through 10 {
     &:nth-child(#{$i}) {
       animation-delay: #{$i * 0.1}s;
     }
   }
-
+ 
   &:last-child {
     margin-bottom: 0;
   }
-
+ 
   .trainer-header {
     margin-bottom: 16px;
-
+ 
     h3 {
       color: #666;
       font-size: 1.2rem;
       font-weight: 500;
       margin-bottom: 8px;
     }
-
+ 
     mat-divider {
       margin: 8px 0;
     }
   }
-
+ 
 .trainer-details {
   padding-top: 18px;
-
+ 
   p {
     display: flex;
-
+ 
     align-items: ceil($number: 0);
     padding-bottom: 20px;
     margin: 8px 0;
@@ -260,13 +267,13 @@
     white-space: normal; /* Prevent text wrapping */
     overflow: hidden; /* Hide overflow */
     text-overflow: ellipsis; /* Add ellipsis for long text */
-
+ 
     @for $i from 1 through 5 {
       &:nth-child(#{$i}) {
         animation-delay: #{$i * 0.1}s;
       }
     }
-
+ 
     mat-icon {
       font-size: 18px;
       width: 18px;
@@ -277,9 +284,9 @@
     }
   }
 }
-
+ 
 }
-
+ 
 mat-card-actions {
   padding: 16px;
   display: flex;
@@ -288,7 +295,7 @@ mat-card-actions {
   border-top: 1px solid #eee;
   background-color: white;
 }
-
+ 
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -299,7 +306,7 @@ mat-card-actions {
     transform: translateY(0);
   }
 }
-
+ 
 @keyframes slideIn {
   from {
     opacity: 0;
@@ -310,9 +317,9 @@ mat-card-actions {
     transform: translateX(0);
   }
 }
-
-
-
+ 
+ 
+ 
 .card-footer{
   display: flex;
   justify-content: space-between;
@@ -320,4 +327,3 @@ mat-card-actions {
   padding: 17px;
   border-top: 1px solid #eee;
 }
-
